@@ -1,10 +1,11 @@
-import { signUpAction } from "@/app/actions";
+import { signupAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { SmtpMessage } from "../smtp-message";
+import { CLIENT_ROUTES } from "@/lib/constants";
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
@@ -24,8 +25,11 @@ export default async function Signup(props: {
         <h1 className="text-2xl font-medium">Sign up</h1>
         <p className="text-sm text text-foreground">
           Already have an account?{" "}
-          <Link className="text-primary font-medium underline" href="/sign-in">
-            Sign in
+          <Link
+            className="text-primary font-medium underline"
+            href={CLIENT_ROUTES.LOGIN}
+          >
+            Login
           </Link>
         </p>
         <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
@@ -39,7 +43,7 @@ export default async function Signup(props: {
             minLength={6}
             required
           />
-          <SubmitButton formAction={signUpAction} pendingText="Signing up...">
+          <SubmitButton formAction={signupAction} pendingText="Signing up...">
             Sign up
           </SubmitButton>
           <FormMessage message={searchParams} />

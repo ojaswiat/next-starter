@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { CLIENT_ROUTES } from "@/lib/constants";
 
 export function EnvVarWarning() {
   return (
@@ -16,7 +17,7 @@ export function EnvVarWarning() {
           disabled
           className="opacity-75 cursor-none pointer-events-none"
         >
-          <Link href="/sign-in">Sign in</Link>
+          <Link href={CLIENT_ROUTES.LOGIN}>Login</Link>
         </Button>
         <Button
           asChild
@@ -25,7 +26,7 @@ export function EnvVarWarning() {
           disabled
           className="opacity-75 cursor-none pointer-events-none"
         >
-          <Link href="/sign-up">Sign up</Link>
+          <Link href={CLIENT_ROUTES.SIGNUP}>Sign up</Link>
         </Button>
       </div>
     </div>

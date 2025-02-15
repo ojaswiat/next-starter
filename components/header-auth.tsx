@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/server";
+import { CLIENT_ROUTES } from "@/lib/constants";
 
 export default async function AuthButton() {
   const supabase = await createClient();
@@ -32,7 +33,7 @@ export default async function AuthButton() {
               disabled
               className="opacity-75 cursor-none pointer-events-none"
             >
-              <Link href="/sign-in">Sign in</Link>
+              <Link href={CLIENT_ROUTES.LOGIN}>Login</Link>
             </Button>
             <Button
               asChild
@@ -41,7 +42,7 @@ export default async function AuthButton() {
               disabled
               className="opacity-75 cursor-none pointer-events-none"
             >
-              <Link href="/sign-up">Sign up</Link>
+              <Link href={CLIENT_ROUTES.SIGNUP}>Sign up</Link>
             </Button>
           </div>
         </div>
@@ -60,10 +61,10 @@ export default async function AuthButton() {
   ) : (
     <div className="flex gap-2">
       <Button asChild size="sm" variant={"outline"}>
-        <Link href="/sign-in">Sign in</Link>
+        <Link href={CLIENT_ROUTES.LOGIN}>Login</Link>
       </Button>
       <Button asChild size="sm" variant={"default"}>
-        <Link href="/sign-up">Sign up</Link>
+        <Link href={CLIENT_ROUTES.SIGNUP}>Sign up</Link>
       </Button>
     </div>
   );

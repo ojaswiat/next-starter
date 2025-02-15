@@ -1,5 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
+import { CLIENT_ROUTES, SERVER_ROUTES } from "@/lib/constants";
+import { isEmpty } from "lodash-es";
 
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
@@ -22,30 +24,53 @@ export const updateSession = async (request: NextRequest) => {
           },
           setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value }) =>
-              request.cookies.set(name, value),
+              request.cookies.set(name, value)
             );
             response = NextResponse.next({
               request,
             });
             cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options),
+              response.cookies.set(name, value, options)
             );
           },
         },
-      },
+      }
     );
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
-    const user = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    // protected routes
-    if (request.nextUrl.pathname.startsWith("/protected") && user.error) {
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+    console.log("user: ", user);
+    console.log("url: ", request.nextUrl.pathname);
+
+    if (
+      isEmpty(user) &&
+      !(
+        request.nextUrl.pathname === CLIENT_ROUTES.HOME ||
+        request.nextUrl.pathname.startsWith(CLIENT_ROUTES.LOGIN) ||
+        request.nextUrl.pathname.startsWith(CLIENT_ROUTES.SIGNUP) ||
+        request.nextUrl.pathname.startsWith(CLIENT_ROUTES.FORGOT_PASSWORD) ||
+        request.nextUrl.pathname.startsWith(SERVER_ROUTES.AUTH) // api route
+      )
+    ) {
+      // no user, potentially respond by redirecting the user to the login page except for the above pages
+      const url = request.nextUrl.clone();
+
+      url.pathname = CLIENT_ROUTES.LOGIN;
+
+      return NextResponse.redirect(url);
     }
 
-    if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/protected", request.url));
+    if (!isEmpty(user) && request.nextUrl.pathname === CLIENT_ROUTES.HOME) {
+      // if the user is logged in and the url is "/", we redirect user to the dashboard - no landing page
+      const url = request.nextUrl.clone();
+
+      url.pathname = CLIENT_ROUTES.DASHBOARD;
+
+      return NextResponse.redirect(url);
     }
 
     return response;

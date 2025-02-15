@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { SmtpMessage } from "../smtp-message";
+import { CLIENT_ROUTES } from "@/lib/constants";
 
 export default async function ForgotPassword(props: {
   searchParams: Promise<Message>;
@@ -17,8 +18,8 @@ export default async function ForgotPassword(props: {
           <h1 className="text-2xl font-medium">Reset Password</h1>
           <p className="text-sm text-secondary-foreground">
             Already have an account?{" "}
-            <Link className="text-primary underline" href="/sign-in">
-              Sign in
+            <Link className="text-primary underline" href={CLIENT_ROUTES.LOGIN}>
+              Login
             </Link>
           </p>
         </div>

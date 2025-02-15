@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { TutorialStep } from "./tutorial-step";
 import { ArrowUpRight } from "lucide-react";
+import { CLIENT_ROUTES } from "@/lib/constants";
 
 export default function SignUpUserSteps() {
   return (
@@ -74,7 +75,7 @@ export default function SignUpUserSteps() {
         <p>
           Head over to the{" "}
           <Link
-            href="/sign-up"
+            href={CLIENT_ROUTES.SIGNUP}
             className="font-bold hover:underline text-foreground/80"
           >
             Sign up
