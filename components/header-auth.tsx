@@ -3,10 +3,10 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { signOutAction } from "@/app/actions";
-import { createClient } from "@/utils/supabase/server";
 import { CLIENT_ROUTES } from "@/lib/constants";
+import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function AuthButton() {
     const supabase = await createClient();
