@@ -1,16 +1,14 @@
 "use client";
 
-import { Button } from "@heroui/react";
+import { Badge, Button } from "@heroui/react";
 import Link from "next/link";
-
-import { Badge } from "./ui/badge";
 
 import { CLIENT_ROUTES } from "@/lib/constants";
 
 export function EnvVarWarning() {
     return (
         <div className="flex gap-4 items-center">
-            <Badge className="font-normal" variant={"outline"}>
+            <Badge className="font-normal">
                 Supabase environment variables required
             </Badge>
             <div className="flex gap-2">
