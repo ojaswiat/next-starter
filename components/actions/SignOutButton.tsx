@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/react";
 
-import { signOutAction } from "@/app/actions";
+import { signOutAction } from "@/actions/supabase";
 
 function SignOutButton() {
     return (

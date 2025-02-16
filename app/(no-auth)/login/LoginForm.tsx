@@ -5,7 +5,7 @@ import type { TMessage } from "@/lib/types";
 import { Input, Link } from "@heroui/react";
 import { useState } from "react";
 
-import { loginAction } from "@/app/actions";
+import { loginAction } from "@/actions/supabase";
 import { SubmitButton } from "@/components/actions/SubmitButton";
 import { FormMessage } from "@/components/sections/FormMessage";
 import { CLIENT_ROUTES } from "@/lib/constants";
