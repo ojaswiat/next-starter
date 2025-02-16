@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-import { TutorialStep } from "./TutorialStep";
+import { TutorialStep } from "../sections/TutorialStep";
 
 import { CLIENT_ROUTES } from "@/lib/constants";
 

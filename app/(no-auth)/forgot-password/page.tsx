@@ -1,12 +1,12 @@
-import type { Message } from "@/components/form-message";
+import type { Message } from "@/components/sections/FormMessage";
 
 import Link from "next/link";
 
 import { SmtpMessage } from "../smtp-message";
 
 import { forgotPasswordAction } from "@/app/actions";
-import { FormMessage } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
+import { SubmitButton } from "@/components/actions/SubmitButton";
+import { FormMessage } from "@/components/sections/FormMessage";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CLIENT_ROUTES } from "@/lib/constants";

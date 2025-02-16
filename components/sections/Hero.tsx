@@ -1,5 +1,5 @@
-import NextLogo from "../NextLogo";
-import SupabaseLogo from "../supabase-logo";
+import NextLogo from "../ui/NextLogo";
+import SupabaseLogo from "../ui/SupabaseLogo";
 
 export default function Header() {
     return (
