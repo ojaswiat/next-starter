@@ -3,12 +3,12 @@
 import type { TMessage } from "@/lib/types";
 
 import { Input, Link } from "@heroui/react";
-import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
 
 import { forgotPasswordAction } from "@/app/actions";
 import { SubmitButton } from "@/components/actions/SubmitButton";
 import { FormMessage } from "@/components/sections/FormMessage";
+import { Label } from "@/components/ui/label";
 import { CLIENT_ROUTES } from "@/lib/constants";
 
 type TForgotPasswordFormProps = {
@@ -20,9 +20,9 @@ export default function ForgotPasswordFrom({
 }: TForgotPasswordFormProps) {
     const [loading, setLoading] = useState(false);
 
-    function forgotPassword(formData: FormData) {
+    async function forgotPassword(formData: FormData) {
         setLoading(true);
-        forgotPasswordAction(formData);
+        await forgotPasswordAction(formData);
         setLoading(false);
     }
 
