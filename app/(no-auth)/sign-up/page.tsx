@@ -2,7 +2,7 @@ import type { Message } from "@/components/sections/FormMessage";
 
 import Link from "next/link";
 
-import { SmtpMessage } from "../smtp-message";
+import { SmtpMessage } from "../../../components/sections/SMTPMessage";
 
 import { signupAction } from "@/app/actions";
 import { SubmitButton } from "@/components/actions/SubmitButton";
@@ -53,6 +53,8 @@ export default async function Signup(props: {
                         type="password"
                     />
                     <SubmitButton
+                        className="text-white"
+                        color="primary"
                         formAction={signupAction}
                         pendingText="Signing up..."
                     >

@@ -2,7 +2,7 @@ import type { Message } from "@/components/sections/FormMessage";
 
 import Link from "next/link";
 
-import { SmtpMessage } from "../smtp-message";
+import { SmtpMessage } from "../../../components/sections/SMTPMessage";
 
 import { forgotPasswordAction } from "@/app/actions";
 import { SubmitButton } from "@/components/actions/SubmitButton";

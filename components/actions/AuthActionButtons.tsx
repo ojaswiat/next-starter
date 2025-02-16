@@ -22,7 +22,7 @@ function AuthActionButtons({ disabled }: TAuthActionButtonProps) {
                 </Link>
             </Button>
             <Button color="primary" disabled={disabled} size="sm">
-                <Link color="foreground" href={CLIENT_ROUTES.SIGNUP}>
+                <Link className="text-white" href={CLIENT_ROUTES.SIGNUP}>
                     Sign up
                 </Link>
             </Button>

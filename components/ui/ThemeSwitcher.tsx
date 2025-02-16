@@ -34,7 +34,7 @@ export default function ThemeSwitcher() {
                 <DropdownTrigger asChild>
                     <Button
                         size="sm"
-                        variant="ghost"
+                        variant="bordered"
                         color="primary"
                         isIconOnly
                     >

@@ -18,7 +18,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
             <form className="flex-1 flex flex-col min-w-64">
                 <h1 className="text-2xl font-medium">Login</h1>
                 <p className="text-sm text-foreground">
-                    {`Don't have an account?`}
+                    {`Don't have an account? `}
                     <Link
                         className="text-foreground font-medium underline"
                         href={CLIENT_ROUTES.SIGNUP}
@@ -49,6 +49,8 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
                         type="password"
                     />
                     <SubmitButton
+                        className="text-white"
+                        color="primary"
                         formAction={loginAction}
                         pendingText="Logging In..."
                     >
