@@ -5,15 +5,14 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 import {
+    Button,
+    Dropdown,
+    DropdownItem,
     DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@heroui/react";
+    DropdownTrigger,
+} from "@heroui/react";
 
-const ThemeSwitcher = () => {
+export default function ThemeSwitcher() {
     const [mounted, setMounted] = useState(false);
     const { theme, setTheme } = useTheme();
 
@@ -31,9 +30,14 @@ const ThemeSwitcher = () => {
     return (
         <div className="flex gap-2 items-center">
             <p>Color mode (theme)</p>
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button size={"sm"} variant="ghost">
+            <Dropdown className="bg-background border border-primary">
+                <DropdownTrigger asChild>
+                    <Button
+                        size="sm"
+                        variant="ghost"
+                        color="primary"
+                        isIconOnly
+                    >
                         {theme === "light" ? (
                             <Sun
                                 key="light"
@@ -54,47 +58,40 @@ const ThemeSwitcher = () => {
                             />
                         )}
                     </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-content">
-                    <DropdownMenuRadioGroup
-                        value={theme}
-                        onValueChange={(e) => setTheme(e)}
+                </DropdownTrigger>
+                <DropdownMenu onAction={(e) => setTheme(e as string)}>
+                    <DropdownItem
+                        className={`flex gap-2 ${theme === "light" ? "border border-primary" : ""}`}
+                        key="light"
                     >
-                        <DropdownMenuRadioItem
-                            className="flex gap-2"
-                            value="light"
-                        >
-                            <Sun
-                                className="text-muted-foreground"
-                                size={ICON_SIZE}
-                            />{" "}
-                            <span>Light</span>
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem
-                            className="flex gap-2"
-                            value="dark"
-                        >
-                            <Moon
-                                className="text-muted-foreground"
-                                size={ICON_SIZE}
-                            />{" "}
-                            <span>Dark</span>
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem
-                            className="flex gap-2"
-                            value="system"
-                        >
-                            <Laptop
-                                className="text-muted-foreground"
-                                size={ICON_SIZE}
-                            />{" "}
-                            <span>System</span>
-                        </DropdownMenuRadioItem>
-                    </DropdownMenuRadioGroup>
-                </DropdownMenuContent>
-            </DropdownMenu>
+                        <Sun
+                            className="text-muted-foreground"
+                            size={ICON_SIZE}
+                        />
+                        <span>Light</span>
+                    </DropdownItem>
+                    <DropdownItem
+                        className={`flex gap-2 ${theme === "dark" ? "border border-primary" : ""}`}
+                        key="dark"
+                    >
+                        <Moon
+                            className="text-muted-foreground"
+                            size={ICON_SIZE}
+                        />
+                        <span>Dark</span>
+                    </DropdownItem>
+                    <DropdownItem
+                        className={`flex gap-2 ${theme === "system" ? "border border-primary" : ""}`}
+                        key="system"
+                    >
+                        <Laptop
+                            className="text-muted-foreground"
+                            size={ICON_SIZE}
+                        />
+                        <span>System</span>
+                    </DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
         </div>
     );
-};
-
-export { ThemeSwitcher };
+}

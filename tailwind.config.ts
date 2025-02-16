@@ -25,9 +25,9 @@ const config = {
                     large: "2rem",
                 },
                 radius: {
-                    small: "0.125rem",
-                    medium: "0.25rem",
-                    large: "0.5rem",
+                    small: "0.25rem",
+                    medium: "0.5rem",
+                    large: "0.75rem",
                 },
             },
             themes: {
