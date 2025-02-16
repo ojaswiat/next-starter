@@ -63,19 +63,25 @@ export default function RootLayout({
                                 {children}
                             </div>
 
-                            <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-                                <p>
-                                    Powered by{" "}
-                                    <a
-                                        className="font-bold hover:underline"
-                                        href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                    >
-                                        Supabase
-                                    </a>
+                            <footer className="border-t mx-auto py-8 text-center">
+                                <div className="w-full flex items-center justify-center gap-8 text-sm">
+                                    <p>
+                                        Powered by{" "}
+                                        <a
+                                            className="font-bold hover:underline"
+                                            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
+                                            rel="noreferrer"
+                                            target="_blank"
+                                        >
+                                            Supabase
+                                        </a>
+                                    </p>
+                                    <ThemeSwitcher />
+                                </div>
+
+                                <p className="text-sm mt-8">
+                                    Mod by Ojaswi Athghara
                                 </p>
-                                <ThemeSwitcher />
                             </footer>
                         </div>
                     </main>
