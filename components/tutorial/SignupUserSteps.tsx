@@ -1,8 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-import { TutorialStep } from "../sections/TutorialStep";
-
+import TutorialStep from "@/components/tutorial/TutorialStep";
 import { CLIENT_ROUTES } from "@/lib/constants";
 
 export default function SignUpUserSteps() {

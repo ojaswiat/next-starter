@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import { Checkbox } from "@heroui/react";
 
-export function TutorialStep({
+export default function TutorialStep({
     title,
     children,
 }: {

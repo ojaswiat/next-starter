@@ -1,11 +1,9 @@
 import type { TMessage } from "@/lib/types";
 
-import { SmtpMessage } from "../../../components/sections/SMTPMessage";
-
-import SignupForm from "./SignupForm";
-
-import GoogleSignin from "@/components/actions/GoogleSigninButton";
-import { FormMessage } from "@/components/sections/FormMessage";
+import GoogleSignin from "@/components/buttons/GoogleSigninButton";
+import SignupForm from "@/components/forms/SignupForm";
+import FormMessage from "@/components/sections/FormMessage";
+import SmtpMessage from "@/components/sections/SMTPMessage";
 
 export default async function Signup(props: {
     searchParams: Promise<TMessage>;

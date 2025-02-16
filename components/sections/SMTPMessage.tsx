@@ -3,7 +3,7 @@
 import { Link } from "@heroui/react";
 import { ArrowUpRight, InfoIcon } from "lucide-react";
 
-export function SmtpMessage() {
+export default function SmtpMessage() {
     return (
         <div className="bg-muted/50 px-5 py-3 border rounded-md flex gap-4">
             <InfoIcon className="mt-0.5" size={16} />

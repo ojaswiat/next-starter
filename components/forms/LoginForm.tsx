@@ -6,8 +6,8 @@ import { Input, Link } from "@heroui/react";
 import { useState } from "react";
 
 import { loginAction } from "@/actions/supabase";
-import { SubmitButton } from "@/components/actions/SubmitButton";
-import { FormMessage } from "@/components/sections/FormMessage";
+import SubmitButton from "@/components/buttons/SubmitButton";
+import FormMessage from "@/components/sections/FormMessage";
 import { CLIENT_ROUTES } from "@/lib/constants";
 
 type TForgotPasswordFormProps = {

@@ -1,8 +1,7 @@
 import type { TMessage } from "@/lib/types";
 
-import LoginForm from "./LoginForm";
-
-import GoogleSignin from "@/components/actions/GoogleSigninButton";
+import GoogleSignin from "@/components/buttons/GoogleSigninButton";
+import LoginForm from "@/components/forms/LoginForm";
 
 export default async function Login(props: {
     searchParams: Promise<TMessage>;

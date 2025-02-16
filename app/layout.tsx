@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import Providers from "./providers";
 
-import DeployButton from "@/components/actions/DeployButton";
+import DeployButton from "@/components/buttons/DeployButton";
 import HeaderAuth from "@/components/sections/HeaderAuth";
 import AlertNotify from "@/components/ui/AlertNotify";
 import EnvVarWarning from "@/components/ui/EnvVarWarning";

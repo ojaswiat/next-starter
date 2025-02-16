@@ -1,8 +1,7 @@
 import type { TMessage } from "@/lib/types";
 
-import { SmtpMessage } from "../../../components/sections/SMTPMessage";
-
-import ForgotPasswordFrom from "./ForgotPasswordFrom";
+import ForgotPasswordFrom from "@/components/forms/ForgotPasswordFrom";
+import SmtpMessage from "@/components/sections/SMTPMessage";
 
 export default async function ForgotPassword(props: {
     searchParams: Promise<TMessage>;

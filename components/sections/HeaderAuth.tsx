@@ -1,5 +1,5 @@
-import AuthActionButtons from "@/components/actions/AuthActionButtons";
-import SignOutButton from "@/components/actions/SignOutButton";
+import AuthActionButtons from "@/components/buttons/AuthActionButtons";
+import SignOutButton from "@/components/buttons/SignOutButton";
 import EnvWarningBadge from "@/components/ui/EnvWarningBadge";
 import HAS_ENV_VARS from "@/utils/supabase/checkEnvVars";
 import { createClient } from "@/utils/supabase/server";

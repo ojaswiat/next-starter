@@ -1,6 +1,6 @@
 import type { TMessage } from "@/lib/types";
 
-import ResetPasswordForm from "./ResetPasswordForm";
+import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
 
 export default async function ResetPassword(props: {
     searchParams: Promise<TMessage>;
