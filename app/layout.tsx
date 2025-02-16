@@ -4,7 +4,7 @@ import Link from "next/link";
 import Providers from "./providers";
 
 import DeployButton from "@/components/actions/DeployButton";
-import HeaderAuth from "@/components/HeaderAuth";
+import HeaderAuth from "@/components/sections/HeaderAuth";
 import { EnvVarWarning } from "@/components/ui/EnvVarWarning";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
