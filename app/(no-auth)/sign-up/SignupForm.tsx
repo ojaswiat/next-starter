@@ -8,7 +8,6 @@ import { useState } from "react";
 import { signupAction } from "@/app/actions";
 import { SubmitButton } from "@/components/actions/SubmitButton";
 import { FormMessage } from "@/components/sections/FormMessage";
-import { Label } from "@/components/ui/label";
 import { CLIENT_ROUTES } from "@/lib/constants";
 
 type TForgotPasswordFormProps = {
@@ -37,9 +36,9 @@ export default function SignupForm({ searchParams }: TForgotPasswordFormProps) {
                 </Link>
             </p>
             <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-                <Label htmlFor="email">Email</Label>
+                <label htmlFor="email">Email</label>
                 <Input required name="email" placeholder="you@example.com" />
-                <Label htmlFor="password">Password</Label>
+                <label htmlFor="password">Password</label>
                 <Input
                     required
                     minLength={6}

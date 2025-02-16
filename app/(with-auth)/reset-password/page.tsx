@@ -1,13 +1,12 @@
-import type { Message } from "@/components/sections/FormMessage";
+import type { TMessage } from "@/lib/types";
 
 import { resetPasswordAction } from "@/app/actions";
 import { SubmitButton } from "@/components/actions/SubmitButton";
 import { FormMessage } from "@/components/sections/FormMessage";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default async function ResetPassword(props: {
-    searchParams: Promise<Message>;
+    searchParams: Promise<TMessage>;
 }) {
     const searchParams = await props.searchParams;
 
@@ -17,14 +16,14 @@ export default async function ResetPassword(props: {
             <p className="text-sm text-foreground/60">
                 Please enter your new password below.
             </p>
-            <Label htmlFor="password">New password</Label>
+            <label htmlFor="password">New password</label>
             <Input
                 required
                 name="password"
                 placeholder="New password"
                 type="password"
             />
-            <Label htmlFor="confirmPassword">Confirm password</Label>
+            <label htmlFor="confirmPassword">Confirm password</label>
             <Input
                 required
                 name="confirmPassword"

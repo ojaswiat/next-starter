@@ -8,7 +8,6 @@ import { useState } from "react";
 import { forgotPasswordAction } from "@/app/actions";
 import { SubmitButton } from "@/components/actions/SubmitButton";
 import { FormMessage } from "@/components/sections/FormMessage";
-import { Label } from "@/components/ui/label";
 import { CLIENT_ROUTES } from "@/lib/constants";
 
 type TForgotPasswordFormProps = {
@@ -41,7 +40,7 @@ export default function ForgotPasswordFrom({
                 </p>
             </div>
             <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-                <Label htmlFor="email">Email</Label>
+                <label htmlFor="email">Email</label>
                 <Input required name="email" placeholder="you@example.com" />
                 <SubmitButton
                     className="text-white"
