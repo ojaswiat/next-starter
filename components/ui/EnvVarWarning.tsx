@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { CLIENT_ROUTES } from "@/lib/constants";
 
-export function EnvVarWarning() {
+export default function EnvVarWarning() {
     return (
         <div className="flex gap-4 items-center">
             <Badge className="font-normal">

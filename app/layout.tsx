@@ -5,9 +5,10 @@ import Providers from "./providers";
 
 import DeployButton from "@/components/actions/DeployButton";
 import HeaderAuth from "@/components/sections/HeaderAuth";
-import { EnvVarWarning } from "@/components/ui/EnvVarWarning";
+import AlertNotify from "@/components/ui/AlertNotify";
+import EnvVarWarning from "@/components/ui/EnvVarWarning";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+import HAS_ENV_VARS from "@/utils/supabase/checkEnvVars";
 
 import "./globals.css";
 
@@ -40,6 +41,7 @@ export default function RootLayout({
             <body className="h-screen w-screen">
                 <Providers>
                     <main className="bg-background text-foreground flex flex-col items-center">
+                        <AlertNotify />
                         <div className="flex-1 w-full flex flex-col gap-20 items-center">
                             <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
                                 <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
@@ -52,7 +54,7 @@ export default function RootLayout({
                                             <DeployButton />
                                         </div>
                                     </div>
-                                    {!hasEnvVars ? (
+                                    {!HAS_ENV_VARS ? (
                                         <EnvVarWarning />
                                     ) : (
                                         <HeaderAuth />

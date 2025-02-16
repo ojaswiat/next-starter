@@ -1,7 +1,7 @@
 import AuthActionButtons from "@/components/actions/AuthActionButtons";
 import SignOutButton from "@/components/actions/SignOutButton";
 import EnvWarningBadge from "@/components/ui/EnvWarningBadge";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+import HAS_ENV_VARS from "@/utils/supabase/checkEnvVars";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function AuthButton() {
@@ -11,7 +11,7 @@ export default async function AuthButton() {
         data: { user },
     } = await supabase.auth.getUser();
 
-    if (!hasEnvVars) {
+    if (!HAS_ENV_VARS) {
         return (
             <div className="flex gap-4 items-center">
                 <EnvWarningBadge />

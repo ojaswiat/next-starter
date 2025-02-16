@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-import { toast } from "@/hooks/use-toast";
+import { useAlertStore } from "@/stores/AlertStore";
 import { createClient } from "@/utils/supabase/client";
 
 export default function GoogleSignin() {
@@ -14,6 +14,7 @@ export default function GoogleSignin() {
     const supabase = createClient();
 
     const searchParams = useSearchParams();
+    const alertStore = useAlertStore();
 
     const next = searchParams.get("next");
 
@@ -33,10 +34,9 @@ export default function GoogleSignin() {
                 throw error;
             }
         } catch (error) {
-            toast({
+            alertStore.notify({
                 title: "Please try again.",
-                description: "There was an error logging in with Google.",
-                variant: "destructive",
+                message: "There was an error logging in with Google.",
             });
             console.error(error);
             setIsGoogleLoading(false);

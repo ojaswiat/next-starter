@@ -13,10 +13,11 @@ export enum EAlertType {
 }
 
 export type TAlert = {
-    id: string;
-    action?: ReactNode;
-    error?: Error | string;
+    id?: string; // Added for tracking
     message: string;
-    type: EAlertType;
+    title?: string;
     duration?: number;
+    action?: ReactNode;
+    type?: EAlertType;
+    closable?: boolean;
 };

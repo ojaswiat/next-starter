@@ -17,7 +17,11 @@ function AuthActionButtons({ disabled }: TAuthActionButtonProps) {
                 size="sm"
                 variant="bordered"
             >
-                <Link color="primary" href={CLIENT_ROUTES.LOGIN}>
+                <Link
+                    className="text-foreground"
+                    color="primary"
+                    href={CLIENT_ROUTES.LOGIN}
+                >
                     Login
                 </Link>
             </Button>
