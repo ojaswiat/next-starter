@@ -1,9 +1,6 @@
-export type Message =
-    | { success: string }
-    | { error: string }
-    | { message: string };
+import type { TMessage } from "@/lib/types";
 
-export function FormMessage({ message }: { message: Message }) {
+export function FormMessage({ message }: { message: TMessage }) {
     return (
         <div className="flex flex-col gap-2 w-full max-w-md text-sm">
             {"success" in message && (
