@@ -3,7 +3,7 @@ import type { Message } from "@/components/form-message";
 import Link from "next/link";
 
 import { loginAction } from "@/app/actions";
-import GoogleSignin from "@/components/application/GoogleSignin";
+import GoogleSignin from "@/components/actions/GoogleSigninButton";
 import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";

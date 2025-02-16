@@ -3,10 +3,10 @@ import Link from "next/link";
 
 import Providers from "./providers";
 
-import DeployButton from "@/components/deploy-button";
+import DeployButton from "@/components/actions/DeployButton";
 import { EnvVarWarning } from "@/components/env-var-warning";
-import HeaderAuth from "@/components/header-auth";
-import { ThemeSwitcher } from "@/components/theme-switcher";
+import HeaderAuth from "@/components/HeaderAuth";
+import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 
 import "./globals.css";
@@ -45,7 +45,8 @@ export default function RootLayout({
                                 <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
                                     <div className="flex gap-5 items-center font-semibold">
                                         <Link href={"/"}>
-                                            Next.js Supabase Starter
+                                            Next.js Supabase Starter by Ojaswi
+                                            Athghara
                                         </Link>
                                         <div className="flex items-center gap-2">
                                             <DeployButton />

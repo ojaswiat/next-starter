@@ -35,7 +35,7 @@ const config = {
                     colors: {
                         background: "#08070d",
                         foreground: "#ffffff",
-                        primary: "#6E34FB",
+                        primary: "#723AFF",
                         success: "#54BF2D",
                         content1: "#2CB5F9",
                         warning: "#FFDE0C",
@@ -46,7 +46,7 @@ const config = {
                     colors: {
                         background: "#ffffff",
                         foreground: "#08070d",
-                        primary: "#6E34FB",
+                        primary: "#723AFF",
                         success: "#54BF2D",
                         content1: "#2CB5F9",
                         warning: "#FFDE0C",

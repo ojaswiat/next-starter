@@ -1,10 +1,12 @@
-import Hero from "@/components/hero";
+import Hero from "@/components/sections/Hero";
 
 export default async function Home() {
     return (
         <>
             <Hero />
-            This is the landing page
+            <p className="text-center">
+                Edit app/page.tsx to create your landing page
+            </p>
         </>
     );
 }

@@ -1,8 +1,7 @@
 "use client";
 
+import { Button } from "@heroui/react";
 import { useState } from "react";
-
-import { Button } from "../ui/button";
 
 const CopyIcon = () => (
     <svg
@@ -49,10 +48,10 @@ export function CodeBlock({ code }: { code: string }) {
     return (
         <pre className="bg-muted rounded-md p-6 my-6 relative">
             <Button
+                isIconOnly
                 className="absolute right-2 top-2"
-                size="icon"
-                variant={"outline"}
-                onClick={copy}
+                variant="bordered"
+                onPress={copy}
             >
                 {icon}
             </Button>
