@@ -1,11 +1,15 @@
-import { Checkbox } from "../ui/checkbox";
+"use client";
+
+import type { ReactNode } from "react";
+
+import { Checkbox } from "@heroui/react";
 
 export function TutorialStep({
     title,
     children,
 }: {
     title: string;
-    children: React.ReactNode;
+    children: ReactNode;
 }) {
     return (
         <li className="relative">
