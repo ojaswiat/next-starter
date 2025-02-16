@@ -1,6 +1,8 @@
 import { Geist } from "next/font/google";
 import Link from "next/link";
 
+import Providers from "./providers";
+
 import DeployButton from "@/components/deploy-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import HeaderAuth from "@/components/header-auth";
@@ -8,7 +10,6 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 
 import "./globals.css";
-import Providers from "./providers";
 
 const defaultUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
@@ -36,9 +37,9 @@ export default function RootLayout({
             className={geistSans.className}
             lang="en"
         >
-            <body className="bg-background text-foreground">
+            <body className="h-screen w-screen">
                 <Providers>
-                    <main className="min-h-screen flex flex-col items-center">
+                    <main className="bg-background text-foreground flex flex-col items-center">
                         <div className="flex-1 w-full flex flex-col gap-20 items-center">
                             <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
                                 <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">

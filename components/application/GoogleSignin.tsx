@@ -1,11 +1,11 @@
 "use client";
 
+import { Button } from "@heroui/react";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { createClient } from "@/utils/supabase/client";
 
@@ -46,10 +46,11 @@ export default function GoogleSignin() {
     return (
         <Button
             className="w-full"
+            color="primary"
             disabled={isGoogleLoading}
             type="button"
-            variant="outline"
-            onClick={signInWithGoogle}
+            variant="bordered"
+            onPress={signInWithGoogle}
         >
             {isGoogleLoading ? (
                 <Loader2 className="mr-2 size-4 animate-spin" />
