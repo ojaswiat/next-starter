@@ -1,16 +1,16 @@
-import type { TMessage } from "@/lib/types";
+import type { Metadata } from "next";
 
 import ForgotPasswordFrom from "@/components/forms/ForgotPasswordFrom";
 import SmtpMessage from "@/components/sections/SMTPMessage";
 
-export default async function ForgotPassword(props: {
-    searchParams: Promise<TMessage>;
-}) {
-    const searchParams = await props.searchParams;
+export const metadata: Metadata = {
+    title: "Forgot Password",
+};
 
+export default async function ForgotPassword() {
     return (
         <>
-            <ForgotPasswordFrom searchParams={searchParams} />
+            <ForgotPasswordFrom />
             <SmtpMessage />
         </>
     );

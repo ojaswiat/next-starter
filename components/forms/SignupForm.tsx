@@ -15,8 +15,9 @@ import { EAlertType } from "@/lib/types";
 import { useAlertStore } from "@/stores/AlertStore";
 
 export default function SignupForm() {
-    const [loading, setLoading] = useState(false);
     const alertStore = useAlertStore();
+
+    const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
     const {
@@ -48,7 +49,6 @@ export default function SignupForm() {
                 });
             } else {
                 reset();
-
                 alertStore.notify({
                     message: response.message,
                     type: EAlertType.SUCCESS,
@@ -76,7 +76,7 @@ export default function SignupForm() {
                 <p className="text-sm text-foreground">
                     {`Already have an account? `}
                     <Link
-                        className="text-foreground font-medium underline text-md"
+                        className="text-primary font-medium underline text-md"
                         href={CLIENT_ROUTES.LOGIN}
                     >
                         Login

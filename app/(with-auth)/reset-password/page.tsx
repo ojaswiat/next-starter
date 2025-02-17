@@ -1,11 +1,11 @@
-import type { TMessage } from "@/lib/types";
+import type { Metadata } from "next";
 
 import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
 
-export default async function ResetPassword(props: {
-    searchParams: Promise<TMessage>;
-}) {
-    const searchParams = await props.searchParams;
+export const metadata: Metadata = {
+    title: "Reset Password",
+};
 
-    return <ResetPasswordForm searchParams={searchParams} />;
+export default async function ResetPassword() {
+    return <ResetPasswordForm />;
 }

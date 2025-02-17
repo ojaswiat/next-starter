@@ -1,13 +1,19 @@
 "use server";
 
-import type { TLoginFormSchema, TSignupFormSchema } from "@/lib/forms";
-
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { CLIENT_ROUTES, EServerResponseCode } from "@/lib/constants";
+import {
+    ForgotPasswordFormSchema,
+    ResetPasswordFormSchema,
+    SignupFormSchema,
+    type TForgotPasswordFormSchema,
+    type TLoginFormSchema,
+    type TResetPasswordFormSchema,
+    type TSignupFormSchema,
+} from "@/lib/forms";
 import { createClient } from "@/utils/supabase/server";
-import { encodedRedirect } from "@/utils/utils";
 
 export const signupAction = async (formData: TSignupFormSchema) => {
     const { email, password } = formData;
@@ -15,12 +21,14 @@ export const signupAction = async (formData: TSignupFormSchema) => {
     const supabase = await createClient();
     const origin = (await headers()).get("origin");
 
-    if (!email || !password) {
-        return encodedRedirect(
-            "error",
-            CLIENT_ROUTES.SIGNUP,
-            "Email and password are required",
-        );
+    const validation = SignupFormSchema.safeParse(formData);
+
+    if (!validation.success) {
+        return {
+            code: EServerResponseCode.FAILURE,
+            error: validation.error,
+            message: "Signup failed",
+        };
     }
 
     const { error } = await supabase.auth.signUp({
@@ -37,7 +45,7 @@ export const signupAction = async (formData: TSignupFormSchema) => {
         return {
             code: EServerResponseCode.FAILURE,
             error,
-            message: "Failed to signup",
+            message: "Something went wrong! Please try again",
         };
     } else {
         return {
@@ -73,18 +81,21 @@ export const loginAction = async (formData: TLoginFormSchema) => {
     }
 };
 
-export const forgotPasswordAction = async (formData: FormData) => {
-    const email = formData.get("email")?.toString();
+export const forgotPasswordAction = async (
+    formData: TForgotPasswordFormSchema,
+) => {
+    const { email } = formData;
     const supabase = await createClient();
     const origin = (await headers()).get("origin");
-    const callbackUrl = formData.get("callbackUrl")?.toString();
 
-    if (!email) {
-        return encodedRedirect(
-            "error",
-            CLIENT_ROUTES.FORGOT_PASSWORD,
-            "Email is required",
-        );
+    const validation = ForgotPasswordFormSchema.safeParse(formData);
+
+    if (!validation.success) {
+        return {
+            code: EServerResponseCode.FAILURE,
+            error: validation.error,
+            message: "Password reset failed! Please try again",
+        };
     }
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -92,46 +103,35 @@ export const forgotPasswordAction = async (formData: FormData) => {
     });
 
     if (error) {
-        console.error(error.message);
+        console.error(error.code + " " + error.message);
 
-        return encodedRedirect(
-            "error",
-            CLIENT_ROUTES.FORGOT_PASSWORD,
-            "Could not reset password",
-        );
+        return {
+            code: EServerResponseCode.FAILURE,
+            error,
+            message: "Something went wrong! Please try again",
+        };
+    } else {
+        return {
+            code: EServerResponseCode.SUCCESS,
+            message: "Success! Please check your mail to reset your password",
+        };
     }
-
-    if (callbackUrl) {
-        return redirect(callbackUrl);
-    }
-
-    return encodedRedirect(
-        "success",
-        CLIENT_ROUTES.FORGOT_PASSWORD,
-        "Check your email for a link to reset your password.",
-    );
 };
 
-export const resetPasswordAction = async (formData: FormData) => {
+export const resetPasswordAction = async (
+    formData: TResetPasswordFormSchema,
+) => {
     const supabase = await createClient();
+    const { password } = formData;
 
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirmPassword") as string;
+    const validation = ResetPasswordFormSchema.safeParse(formData);
 
-    if (!password || !confirmPassword) {
-        encodedRedirect(
-            "error",
-            CLIENT_ROUTES.RESET_PASSWORD,
-            "Password and confirm password are required",
-        );
-    }
-
-    if (password !== confirmPassword) {
-        encodedRedirect(
-            "error",
-            CLIENT_ROUTES.RESET_PASSWORD,
-            "Passwords do not match",
-        );
+    if (!validation.success) {
+        return {
+            code: EServerResponseCode.FAILURE,
+            error: validation.error,
+            message: "Password reset failed! Please try again",
+        };
     }
 
     const { error } = await supabase.auth.updateUser({
@@ -139,18 +139,17 @@ export const resetPasswordAction = async (formData: FormData) => {
     });
 
     if (error) {
-        encodedRedirect(
-            "error",
-            CLIENT_ROUTES.RESET_PASSWORD,
-            "Password update failed",
-        );
+        return {
+            code: EServerResponseCode.FAILURE,
+            error,
+            message: "Something went wrong! Please try again",
+        };
+    } else {
+        return {
+            code: EServerResponseCode.SUCCESS,
+            message: "Password changed successfully",
+        };
     }
-
-    encodedRedirect(
-        "success",
-        CLIENT_ROUTES.RESET_PASSWORD,
-        "Password updated",
-    );
 };
 
 export const signOutAction = async () => {

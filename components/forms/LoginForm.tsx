@@ -19,10 +19,11 @@ import { EAlertType } from "@/lib/types";
 import { useAlertStore } from "@/stores/AlertStore";
 
 export default function LoginForm() {
-    const [loading, setLoading] = useState(false);
     const alertStore = useAlertStore();
-    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
+
+    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
@@ -76,7 +77,7 @@ export default function LoginForm() {
                 <p className="text-sm text-foreground">
                     {`Don't have an account? `}
                     <Link
-                        className="text-foreground font-medium underline text-md"
+                        className="text-primary font-medium underline text-md"
                         href={CLIENT_ROUTES.SIGNUP}
                     >
                         Sign Up
@@ -122,10 +123,10 @@ export default function LoginForm() {
             <p className="text-sm text-foreground">
                 {`Can't remember your password? `}
                 <Link
-                    className="text-primary underline"
+                    className="text-primary font-medium underline text-md"
                     href={CLIENT_ROUTES.FORGOT_PASSWORD}
                 >
-                    Reset?
+                    Reset
                 </Link>
             </p>
 

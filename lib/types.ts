@@ -1,10 +1,5 @@
 import type { ReactNode } from "react";
 
-export type TMessage =
-    | { success: string }
-    | { error: string }
-    | { message: string };
-
 export enum EAlertType {
     SUCCESS = "success",
     ERROR = "danger",
