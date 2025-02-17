@@ -20,10 +20,9 @@ export default async function Signup(props: {
 
     return (
         <>
-            <div className="mx-auto">
-                <SignupForm searchParams={searchParams} />
-                <GoogleSignin />
-            </div>
+            <SignupForm />
+            <GoogleSignin />
+
             <SmtpMessage />
         </>
     );

@@ -1,15 +1,17 @@
 "use server";
 
+import type { TSignupFormSchema } from "@/lib/forms";
+
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { encodedRedirect } from "@/utils/utils";
+import { CLIENT_ROUTES, EServerResponseCode } from "@/lib/constants";
 import { createClient } from "@/utils/supabase/server";
-import { CLIENT_ROUTES } from "@/lib/constants";
+import { encodedRedirect } from "@/utils/utils";
 
-export const signupAction = async (formData: FormData) => {
-    const email = formData.get("email")?.toString();
-    const password = formData.get("password")?.toString();
+export const signupAction = async (formData: TSignupFormSchema) => {
+    const { email, password } = formData;
+
     const supabase = await createClient();
     const origin = (await headers()).get("origin");
 
@@ -32,13 +34,16 @@ export const signupAction = async (formData: FormData) => {
     if (error) {
         console.error(error.code + " " + error.message);
 
-        return encodedRedirect("error", CLIENT_ROUTES.SIGNUP, error.message);
+        return {
+            code: EServerResponseCode.FAILURE,
+            error,
+            message: "Failed to signup",
+        };
     } else {
-        return encodedRedirect(
-            "success",
-            CLIENT_ROUTES.SIGNUP,
-            "Thanks for signing up! Please check your email for a verification link.",
-        );
+        return {
+            code: EServerResponseCode.SUCCESS,
+            message: "Signup successful",
+        };
     }
 };
 

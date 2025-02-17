@@ -1,62 +1,123 @@
 "use client";
 
-import type { TMessage } from "@/lib/types";
-
-import { Input, Link } from "@heroui/react";
+import { Button, Input } from "@heroui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+import PasswordEye from "../ui/PasswordEye";
 
 import { signupAction } from "@/actions/supabase";
-import SubmitButton from "@/components/buttons/SubmitButton";
-import FormMessage from "@/components/sections/FormMessage";
-import { CLIENT_ROUTES } from "@/lib/constants";
+import { EServerResponseCode } from "@/lib/constants";
+import { SignupFormSchema, type TSignupFormSchema } from "@/lib/forms";
+import { EAlertType } from "@/lib/types";
+import { useAlertStore } from "@/stores/AlertStore";
 
-type TForgotPasswordFormProps = {
-    searchParams: TMessage;
-};
-
-export default function SignupForm({ searchParams }: TForgotPasswordFormProps) {
+export default function SignupForm() {
     const [loading, setLoading] = useState(false);
+    const alertStore = useAlertStore();
+    const [showPassword, setShowPassword] = useState(false);
 
-    async function signup(formData: FormData) {
-        setLoading(true);
-        await signupAction(formData);
-        setLoading(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<TSignupFormSchema>({
+        resolver: zodResolver(SignupFormSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+            confirmPassword: "",
+        },
+    });
+
+    const onSubmit = async (data: TSignupFormSchema) => {
+        try {
+            setLoading(true);
+            const response = await signupAction(data);
+
+            if (response.code === EServerResponseCode.SUCCESS) {
+                alertStore.notify({
+                    message: response.message,
+                    type: EAlertType.SUCCESS,
+                });
+            } else {
+                alertStore.notify({
+                    message: response.message,
+                    type: EAlertType.ERROR,
+                });
+            }
+
+            reset();
+        } catch (error) {
+            console.error("Signup failed:", error);
+            alertStore.notify({
+                message: "Failed to signup",
+                type: EAlertType.ERROR,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    function toggleShowPassword() {
+        setShowPassword((prev) => !prev);
     }
 
     return (
-        <form className="flex flex-col min-w-64 max-w-64 mx-auto">
-            <h1 className="text-2xl font-medium">Sign up</h1>
-            <p className="text-sm text text-foreground">
-                Already have an account?{" "}
-                <Link
-                    className="text-primary font-medium underline"
-                    href={CLIENT_ROUTES.LOGIN}
-                >
-                    Login
-                </Link>
-            </p>
-            <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-                <label htmlFor="email">Email</label>
-                <Input required name="email" placeholder="you@example.com" />
-                <label htmlFor="password">Password</label>
-                <Input
-                    required
-                    minLength={6}
-                    name="password"
-                    placeholder="Your password"
-                    type="password"
-                />
-                <SubmitButton
-                    className="text-white"
-                    color="primary"
-                    formAction={signup}
-                    isLoading={loading}
-                    pendingText="Signing up..."
-                >
-                    Sign up
-                </SubmitButton>
-                <FormMessage message={searchParams} />
-            </div>
+        <form
+            className="flex flex-col gap-y-4 w-full"
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <Input
+                {...register("email")}
+                fullWidth
+                errorMessage={errors.email?.message}
+                isInvalid={!!errors?.email}
+                label="Email"
+                type="email"
+            />
+
+            {/* todo: add eye and show password button */}
+            <Input
+                {...register("password")}
+                fullWidth
+                endContent={
+                    <PasswordEye
+                        showPassword={showPassword}
+                        toggleShowPassword={toggleShowPassword}
+                    />
+                }
+                errorMessage={errors.password?.message}
+                isInvalid={!!errors?.password}
+                label="Password"
+                type={showPassword ? "text" : "password"}
+            />
+
+            <Input
+                {...register("confirmPassword")}
+                fullWidth
+                endContent={
+                    <PasswordEye
+                        showPassword={showPassword}
+                        toggleShowPassword={toggleShowPassword}
+                    />
+                }
+                errorMessage={errors.confirmPassword?.message}
+                isInvalid={!!errors?.confirmPassword}
+                label="Confirm Password"
+                type={showPassword ? "text" : "password"}
+            />
+
+            <Button
+                color="primary"
+                disabled={loading}
+                isLoading={loading}
+                type="submit"
+            >
+                Sign Up
+            </Button>
         </form>
     );
 }

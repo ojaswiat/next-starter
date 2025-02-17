@@ -23,3 +23,8 @@ export const SERVER_ROUTES = {
     // auth
     AUTH: "/auth",
 };
+
+export enum EServerResponseCode {
+    SUCCESS,
+    FAILURE,
+}
