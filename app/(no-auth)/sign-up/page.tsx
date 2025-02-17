@@ -1,29 +1,17 @@
-import type { TMessage } from "@/lib/types";
+import type { Metadata } from "next";
 
-import GoogleSignin from "@/components/buttons/GoogleSigninButton";
 import SignupForm from "@/components/forms/SignupForm";
-import FormMessage from "@/components/sections/FormMessage";
-import SmtpMessage from "@/components/sections/SMTPMessage";
+import SMTPMessage from "@/components/sections/SMTPMessage";
 
-export default async function Signup(props: {
-    searchParams: Promise<TMessage>;
-}) {
-    const searchParams = await props.searchParams;
+export const metadata: Metadata = {
+    title: "Signup",
+};
 
-    if ("message" in searchParams) {
-        return (
-            <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
-                <FormMessage message={searchParams} />
-            </div>
-        );
-    }
-
+export default async function Signup() {
     return (
         <>
             <SignupForm />
-            <GoogleSignin />
-
-            <SmtpMessage />
+            <SMTPMessage />
         </>
     );
 }

@@ -15,3 +15,10 @@ export const SignupFormSchema = z
     });
 
 export type TSignupFormSchema = z.infer<typeof SignupFormSchema>;
+
+export const LoginFormSchema = z.object({
+    email: z.string().email("Please enter a valid email"),
+    password: z.string(),
+});
+
+export type TLoginFormSchema = z.infer<typeof LoginFormSchema>;

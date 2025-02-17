@@ -64,8 +64,13 @@ export const updateSession = async (request: NextRequest) => {
             return NextResponse.redirect(url);
         }
 
-        if (!isEmpty(user) && request.nextUrl.pathname === CLIENT_ROUTES.HOME) {
-            // if the user is logged in and the url is "/", we redirect user to the dashboard - no landing page
+        if (
+            !isEmpty(user) &&
+            (request.nextUrl.pathname === CLIENT_ROUTES.LOGIN ||
+                request.nextUrl.pathname === CLIENT_ROUTES.SIGNUP ||
+                request.nextUrl.pathname === CLIENT_ROUTES.HOME)
+        ) {
+            // if the user is logged in and the url is login, signup, or landing page, we redirect the user to the dasbhoard.
             const url = request.nextUrl.clone();
 
             url.pathname = CLIENT_ROUTES.DASHBOARD;

@@ -28,70 +28,57 @@ export default function ThemeSwitcher() {
     const ICON_SIZE = 16;
 
     return (
-        <div className="flex gap-2 items-center">
-            <p>Color mode (theme)</p>
-            <Dropdown className="bg-background border border-primary">
-                <DropdownTrigger asChild>
-                    <Button
-                        size="sm"
-                        variant="bordered"
-                        color="primary"
-                        isIconOnly
-                    >
-                        {theme === "light" ? (
-                            <Sun
-                                key="light"
-                                className={"text-muted-foreground"}
-                                size={ICON_SIZE}
-                            />
-                        ) : theme === "dark" ? (
-                            <Moon
-                                key="dark"
-                                className={"text-muted-foreground"}
-                                size={ICON_SIZE}
-                            />
-                        ) : (
-                            <Laptop
-                                key="system"
-                                className={"text-muted-foreground"}
-                                size={ICON_SIZE}
-                            />
-                        )}
-                    </Button>
-                </DropdownTrigger>
-                <DropdownMenu onAction={(e) => setTheme(e as string)}>
-                    <DropdownItem
-                        className={`flex gap-2 ${theme === "light" ? "border border-primary" : ""}`}
-                        key="light"
-                    >
+        <Dropdown className="bg-background border border-primary">
+            <DropdownTrigger asChild>
+                <Button variant="bordered" color="primary">
+                    Color Mode
+                    {theme === "light" ? (
                         <Sun
-                            className="text-muted-foreground"
+                            key="light"
+                            className={"text-muted-foreground"}
                             size={ICON_SIZE}
                         />
-                        <span>Light</span>
-                    </DropdownItem>
-                    <DropdownItem
-                        className={`flex gap-2 ${theme === "dark" ? "border border-primary" : ""}`}
-                        key="dark"
-                    >
+                    ) : theme === "dark" ? (
                         <Moon
-                            className="text-muted-foreground"
+                            key="dark"
+                            className={"text-muted-foreground"}
                             size={ICON_SIZE}
                         />
-                        <span>Dark</span>
-                    </DropdownItem>
-                    <DropdownItem
-                        className={`flex gap-2 ${theme === "system" ? "border border-primary" : ""}`}
-                        key="system"
-                    >
+                    ) : (
                         <Laptop
-                            className="text-muted-foreground"
+                            key="system"
+                            className={"text-muted-foreground"}
                             size={ICON_SIZE}
                         />
-                        <span>System</span>
-                    </DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
-        </div>
+                    )}
+                </Button>
+            </DropdownTrigger>
+            <DropdownMenu onAction={(e) => setTheme(e as string)}>
+                <DropdownItem
+                    className={`flex gap-2 ${theme === "light" ? "border border-primary" : ""}`}
+                    key="light"
+                >
+                    <Sun className="text-muted-foreground" size={ICON_SIZE} />
+                    <span>Light</span>
+                </DropdownItem>
+                <DropdownItem
+                    className={`flex gap-2 ${theme === "dark" ? "border border-primary" : ""}`}
+                    key="dark"
+                >
+                    <Moon className="text-muted-foreground" size={ICON_SIZE} />
+                    <span>Dark</span>
+                </DropdownItem>
+                <DropdownItem
+                    className={`flex gap-2 ${theme === "system" ? "border border-primary" : ""}`}
+                    key="system"
+                >
+                    <Laptop
+                        className="text-muted-foreground"
+                        size={ICON_SIZE}
+                    />
+                    <span>System</span>
+                </DropdownItem>
+            </DropdownMenu>
+        </Dropdown>
     );
 }

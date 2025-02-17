@@ -5,7 +5,7 @@ import { ArrowUpRight, InfoIcon } from "lucide-react";
 
 export default function SmtpMessage() {
     return (
-        <div className="bg-muted/50 px-5 py-3 border rounded-md flex gap-4">
+        <div className="bg-muted/50 px-5 py-3 border rounded-md flex gap-4 mx-auto w-fit">
             <InfoIcon className="mt-0.5" size={16} />
             <div className="flex flex-col gap-1">
                 <small className="text-sm text-foreground">
@@ -15,7 +15,7 @@ export default function SmtpMessage() {
                 <div>
                     <Link
                         isExternal
-                        className="text-primary/50 hover:text-primary flex items-center text-sm gap-1"
+                        className="text-primary hover:text-primary flex items-center text-sm gap-1"
                         href="https://supabase.com/docs/guides/auth/auth-smtp"
                     >
                         Learn more <ArrowUpRight size={14} />

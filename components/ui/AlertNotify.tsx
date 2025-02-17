@@ -16,7 +16,7 @@ export default function AlertNotify() {
                     variant="solid"
                     title={alert.title ?? ""}
                     description={alert.message ?? ""}
-                    className="w-full transition-all duration-300 ease-in-out shadow-lg text-white"
+                    className="w-full shadow-lg text-white slide-down"
                     isClosable={alert.closable}
                     onClose={
                         alert.closable

@@ -1,6 +1,6 @@
 "use server";
 
-import type { TSignupFormSchema } from "@/lib/forms";
+import type { TLoginFormSchema, TSignupFormSchema } from "@/lib/forms";
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -42,14 +42,14 @@ export const signupAction = async (formData: TSignupFormSchema) => {
     } else {
         return {
             code: EServerResponseCode.SUCCESS,
-            message: "Signup successful",
+            message:
+                "Signup successful! Please check your mail to confirm your account",
         };
     }
 };
 
-export const loginAction = async (formData: FormData) => {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+export const loginAction = async (formData: TLoginFormSchema) => {
+    const { email, password } = formData;
     const supabase = await createClient();
 
     const { error } = await supabase.auth.signInWithPassword({
@@ -58,10 +58,19 @@ export const loginAction = async (formData: FormData) => {
     });
 
     if (error) {
-        return encodedRedirect("error", CLIENT_ROUTES.LOGIN, error.message);
-    }
+        console.error(error.code + " " + error.message);
 
-    return redirect(CLIENT_ROUTES.DASHBOARD);
+        return {
+            code: EServerResponseCode.FAILURE,
+            error,
+            message: "Invalid credentials",
+        };
+    } else {
+        return {
+            code: EServerResponseCode.SUCCESS,
+            message: "Login successful",
+        };
+    }
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {

@@ -1,9 +1,9 @@
 {
-    "name": "next-starter",
+    "name": "nexus",
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev --turbopack",
+        "dev": "next dev --turbo",
         "build": "next build",
         "start": "next start",
         "lint": "tsc --noEmit && next lint",
@@ -49,6 +49,7 @@
         "eslint-plugin-unused-imports": "^4.1.4",
         "postcss": "^8.5.2",
         "prettier": "^3.5.1",
+        "sass": "^1.85.0",
         "tailwind-merge": "^3.0.1",
         "tailwindcss": "3.4.17",
         "turbo": "^2.4.2",

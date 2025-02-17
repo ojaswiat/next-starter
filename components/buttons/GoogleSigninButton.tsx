@@ -39,6 +39,7 @@ export default function GoogleSignin() {
                 message: "There was an error logging in with Google.",
             });
             console.error(error);
+        } finally {
             setIsGoogleLoading(false);
         }
     }

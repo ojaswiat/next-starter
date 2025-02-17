@@ -1,69 +1,137 @@
 "use client";
 
-import type { TMessage } from "@/lib/types";
+import type { TLoginFormSchema } from "@/lib/forms";
 
-import { Input, Link } from "@heroui/react";
+import { Button, Input, Link } from "@heroui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { isEmpty } from "lodash-es";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+import GoogleSignin from "../buttons/GoogleSigninButton";
 
 import { loginAction } from "@/actions/supabase";
-import SubmitButton from "@/components/buttons/SubmitButton";
-import FormMessage from "@/components/sections/FormMessage";
-import { CLIENT_ROUTES } from "@/lib/constants";
+import PasswordEye from "@/components/ui/PasswordEye";
+import { CLIENT_ROUTES, EServerResponseCode } from "@/lib/constants";
+import { LoginFormSchema } from "@/lib/forms";
+import { EAlertType } from "@/lib/types";
+import { useAlertStore } from "@/stores/AlertStore";
 
-type TForgotPasswordFormProps = {
-    searchParams: TMessage;
-};
-
-export default function LoginForm({ searchParams }: TForgotPasswordFormProps) {
+export default function LoginForm() {
     const [loading, setLoading] = useState(false);
+    const alertStore = useAlertStore();
+    const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
 
-    async function login(formData: FormData) {
-        setLoading(true);
-        await loginAction(formData);
-        setLoading(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<TLoginFormSchema>({
+        resolver: zodResolver(LoginFormSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
+
+    const onSubmit = async (data: TLoginFormSchema) => {
+        try {
+            setLoading(true);
+            const response = await loginAction(data);
+
+            if (
+                isEmpty(response) ||
+                response.code !== EServerResponseCode.SUCCESS
+            ) {
+                alertStore.notify({
+                    message: response.message,
+                    type: EAlertType.ERROR,
+                });
+            } else {
+                reset();
+                router.push(CLIENT_ROUTES.DASHBOARD);
+            }
+        } catch (error) {
+            console.error("Login failed:", error);
+            alertStore.notify({
+                message: "Failed to login",
+                type: EAlertType.ERROR,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    function toggleShowPassword() {
+        setShowPassword((prev) => !prev);
     }
 
     return (
-        <form className="flex-1 flex flex-col min-w-64">
-            <h1 className="text-2xl font-medium">Login</h1>
-            <p className="text-sm text-foreground">
-                {`Don't have an account? `}
-                <Link
-                    className="text-foreground font-medium underline"
-                    href={CLIENT_ROUTES.SIGNUP}
-                >
-                    Sign up
-                </Link>
-            </p>
-            <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-                <label htmlFor="email">Email</label>
-                <Input required name="email" placeholder="you@example.com" />
-                <div className="flex justify-between items-center">
-                    <label htmlFor="password">Password</label>
+        <div className="container self-center flex flex-col gap-4 max-w-xl">
+            <div>
+                <h1 className="text-2xl font-medium">Login</h1>
+                <p className="text-sm text-foreground">
+                    {`Don't have an account? `}
                     <Link
-                        className="text-xs text-foreground underline"
-                        href="/forgot-password"
+                        className="text-foreground font-medium underline text-md"
+                        href={CLIENT_ROUTES.SIGNUP}
                     >
-                        Forgot Password?
+                        Sign Up
                     </Link>
-                </div>
+                </p>
+            </div>
+            <form
+                className="flex flex-col gap-y-4 mt-4"
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <Input
-                    required
-                    name="password"
-                    placeholder="Your password"
-                    type="password"
+                    {...register("email")}
+                    fullWidth
+                    errorMessage={errors.email?.message}
+                    isInvalid={!!errors?.email}
+                    label="Email"
+                    type="email"
                 />
-                <SubmitButton
-                    className="text-white"
+                <Input
+                    {...register("password")}
+                    fullWidth
+                    endContent={
+                        <PasswordEye
+                            showPassword={showPassword}
+                            toggleShowPassword={toggleShowPassword}
+                        />
+                    }
+                    errorMessage={errors.password?.message}
+                    isInvalid={!!errors?.password}
+                    label="Password"
+                    type={showPassword ? "text" : "password"}
+                />
+                <Button
                     color="primary"
-                    formAction={login}
+                    disabled={loading}
                     isLoading={loading}
-                    pendingText="Logging In..."
+                    type="submit"
                 >
                     Login
-                </SubmitButton>
-                <FormMessage message={searchParams} />
-            </div>
-        </form>
+                </Button>
+            </form>
+
+            <p className="text-sm text-foreground">
+                {`Can't remember your password? `}
+                <Link
+                    className="text-primary underline"
+                    href={CLIENT_ROUTES.FORGOT_PASSWORD}
+                >
+                    Reset?
+                </Link>
+            </p>
+
+            <p className="text-center">Or</p>
+
+            <GoogleSignin />
+        </div>
     );
 }

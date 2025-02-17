@@ -1,17 +1,15 @@
-import type { TMessage } from "@/lib/types";
+import type { Metadata } from "next";
 
-import GoogleSignin from "@/components/buttons/GoogleSigninButton";
 import LoginForm from "@/components/forms/LoginForm";
 
-export default async function Login(props: {
-    searchParams: Promise<TMessage>;
-}) {
-    const searchParams = await props.searchParams;
+export const metadata: Metadata = {
+    title: "Login",
+};
 
+export default async function Login() {
     return (
         <>
-            <LoginForm searchParams={searchParams} />
-            <GoogleSignin />
+            <LoginForm />
         </>
     );
 }

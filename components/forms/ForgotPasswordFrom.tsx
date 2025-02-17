@@ -30,7 +30,7 @@ export default function ForgotPasswordFrom({
             <div>
                 <h1 className="text-2xl font-medium">Reset Password</h1>
                 <p className="text-sm text-foreground">
-                    Already have an account?{" "}
+                    {`Remember your password? `}
                     <Link
                         className="text-primary underline"
                         href={CLIENT_ROUTES.LOGIN}
