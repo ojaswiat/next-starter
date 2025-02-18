@@ -12,7 +12,7 @@ import { forgotPasswordAction } from "@/actions/supabase";
 import { CLIENT_ROUTES, EServerResponseCode } from "@/lib/constants";
 import { ForgotPasswordFormSchema } from "@/lib/forms";
 import { EAlertType } from "@/lib/types";
-import { useAlertStore } from "@/stores/AlertStore";
+import useAlertStore from "@/stores/AlertStore";
 
 export default function ForgotPasswordFrom() {
     const alertStore = useAlertStore();

@@ -1,5 +1,6 @@
 import AuthActionButtons from "@/components/buttons/AuthActionButtons";
 import LogoutButton from "@/components/buttons/LogoutButton";
+import UserEmail from "@/components/sections/UserEmail";
 import EnvWarningBadge from "@/components/ui/EnvWarningBadge";
 import HAS_ENV_VARS from "@/utils/supabase/checkEnvVars";
 import { createClient } from "@/utils/supabase/server";
@@ -22,7 +23,7 @@ export default async function AuthButton() {
 
     return user ? (
         <div className="flex items-center gap-4">
-            Hey, {user.email}!
+            <UserEmail />
             <LogoutButton />
         </div>
     ) : (

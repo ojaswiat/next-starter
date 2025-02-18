@@ -1,6 +1,6 @@
 "use client";
 
-import { useAlertStore } from "@/stores/AlertStore";
+import useAlertStore from "@/stores/AlertStore";
 import { Alert } from "@heroui/react";
 
 export default function AlertNotify() {

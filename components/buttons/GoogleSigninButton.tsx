@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-import { useAlertStore } from "@/stores/AlertStore";
+import useAlertStore from "@/stores/AlertStore";
 import { createClient } from "@/utils/supabase/client";
 
 export default function GoogleSignin() {

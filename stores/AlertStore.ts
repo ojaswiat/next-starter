@@ -12,7 +12,7 @@ type TAlertStore = {
 
 const DEFAULT_ALERT_DURATION = 5000;
 
-export const useAlertStore = create<TAlertStore>((set) => ({
+const useAlertStore = create<TAlertStore>((set) => ({
     alerts: [],
 
     notify: (alert) => {
@@ -37,3 +37,5 @@ export const useAlertStore = create<TAlertStore>((set) => ({
         }));
     },
 }));
+
+export default useAlertStore;

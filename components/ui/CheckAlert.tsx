@@ -1,7 +1,7 @@
 "use client";
 
 import { EAlertType } from "@/lib/types";
-import { useAlertStore } from "@/stores/AlertStore";
+import useAlertStore from "@/stores/AlertStore";
 import { Button } from "@heroui/react";
 
 export default function CheckAlert() {

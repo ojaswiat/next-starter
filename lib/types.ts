@@ -16,3 +16,7 @@ export type TAlert = {
     type?: EAlertType;
     closable?: boolean;
 };
+
+export type TUser = {
+    email: string;
+};

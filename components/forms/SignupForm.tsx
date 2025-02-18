@@ -12,7 +12,7 @@ import PasswordEye from "@/components/ui/PasswordEye";
 import { CLIENT_ROUTES, EServerResponseCode } from "@/lib/constants";
 import { SignupFormSchema, type TSignupFormSchema } from "@/lib/forms";
 import { EAlertType } from "@/lib/types";
-import { useAlertStore } from "@/stores/AlertStore";
+import useAlertStore from "@/stores/AlertStore";
 
 export default function SignupForm() {
     const alertStore = useAlertStore();
