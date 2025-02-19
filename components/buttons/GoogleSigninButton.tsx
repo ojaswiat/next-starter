@@ -2,20 +2,45 @@
 
 import { Button } from "@heroui/react";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
+import { EAlertType } from "@/lib/types";
 import useAlertStore from "@/stores/AlertStore";
 import { createClient } from "@/utils/supabase/client";
 
 export default function GoogleSignin() {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
     const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
     const supabase = createClient();
 
-    const searchParams = useSearchParams();
     const alertStore = useAlertStore();
 
     const next = searchParams.get("next");
+    const loginFailed = searchParams.get("failed");
+
+    useEffect(() => {
+        // Shows an alert when google sign in fails and remove the search params
+        // Check the callback.ts file
+
+        if (loginFailed) {
+            alertStore.notify({
+                type: EAlertType.ERROR,
+                message: "Something went wrong! Please try again",
+            });
+
+            // Clears the search param "failed" so that when user reloads the page, it doesn't show alert again unnecessarily
+            const nextSearchParams = new URLSearchParams(
+                searchParams.toString(),
+            );
+
+            nextSearchParams.delete("failed");
+            router.replace(`${pathname}?${nextSearchParams}`);
+        }
+    }, [loginFailed]);
 
     async function signInWithGoogle() {
         setIsGoogleLoading(true);

@@ -1,8 +1,13 @@
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 import { updateSession } from "@/utils/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
+    const response = NextResponse.next();
+    const searchParams = request.nextUrl.searchParams.toString();
+
+    response.headers.set("searchParams", searchParams);
+
     return await updateSession(request);
 }
 

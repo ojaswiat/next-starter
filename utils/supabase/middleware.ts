@@ -1,8 +1,15 @@
 import { createServerClient } from "@supabase/ssr";
-import { isEmpty } from "lodash-es";
+import { includes, isEmpty } from "lodash-es";
 import { type NextRequest, NextResponse } from "next/server";
 
-import { CLIENT_ROUTES, SERVER_ROUTES } from "@/lib/constants";
+import { CLIENT_ROUTES } from "@/lib/constants";
+
+const PROTECTED_ROUTES = [
+    CLIENT_ROUTES.DASHBOARD,
+    CLIENT_ROUTES.PROFILE,
+    CLIENT_ROUTES.SETTINGS,
+    CLIENT_ROUTES.RESET_PASSWORD,
+];
 
 export const updateSession = async (request: NextRequest) => {
     // This `try/catch` block is only here for the interactive tutorial.
@@ -46,15 +53,7 @@ export const updateSession = async (request: NextRequest) => {
 
         if (
             isEmpty(user) &&
-            !(
-                request.nextUrl.pathname === CLIENT_ROUTES.HOME ||
-                request.nextUrl.pathname.startsWith(CLIENT_ROUTES.LOGIN) ||
-                request.nextUrl.pathname.startsWith(CLIENT_ROUTES.SIGNUP) ||
-                request.nextUrl.pathname.startsWith(
-                    CLIENT_ROUTES.FORGOT_PASSWORD,
-                ) ||
-                request.nextUrl.pathname.startsWith(SERVER_ROUTES.AUTH) // api route
-            )
+            includes(PROTECTED_ROUTES, request.nextUrl.pathname)
         ) {
             // no user, potentially respond by redirecting the user to the login page except for the above pages
             const url = request.nextUrl.clone();
@@ -73,7 +72,7 @@ export const updateSession = async (request: NextRequest) => {
             // if the user is logged in and the url is login, signup, or forgot-password we redirect the user to home.
             const url = request.nextUrl.clone();
 
-            url.pathname = CLIENT_ROUTES.HOME;
+            url.pathname = CLIENT_ROUTES.DASHBOARD;
 
             return NextResponse.redirect(url);
         }

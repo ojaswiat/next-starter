@@ -4,7 +4,6 @@ import type { TUser } from "@/lib/types";
 
 import {
     Button,
-    Link,
     Navbar,
     NavbarBrand,
     NavbarContent,
@@ -12,7 +11,8 @@ import {
 } from "@heroui/react";
 import { isEmpty } from "lodash-es";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { signOutAction } from "@/actions/supabase";
@@ -27,6 +27,8 @@ type TTopNavbarProps = {
 
 export default function TopNavbar({ user }: TTopNavbarProps) {
     const router = useRouter();
+    const pathName = usePathname();
+
     const alertStore = useAlertStore();
     const userStore = useUserStore();
 
@@ -69,22 +71,53 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
                     src="/images/NexusLogo.svg"
                     width={20}
                 />
-                <p className="font-bold text-inherit">Nexus</p>
+                <Link
+                    className="font-bold text-primary"
+                    href={CLIENT_ROUTES.HOME}
+                >
+                    Nexus
+                </Link>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
-                <NavbarItem>
-                    <Link color="foreground" href="#">
-                        Features
+                {!isEmpty(user?.email) ? (
+                    <NavbarItem isActive={pathName === CLIENT_ROUTES.DASHBOARD}>
+                        <Link href={CLIENT_ROUTES.DASHBOARD}>
+                            <p
+                                className={`${
+                                    pathName === CLIENT_ROUTES.DASHBOARD
+                                        ? "text-primary"
+                                        : "text-foreground"
+                                }`}
+                            >
+                                Dashboard
+                            </p>
+                        </Link>
+                    </NavbarItem>
+                ) : null}
+                <NavbarItem isActive={pathName === CLIENT_ROUTES.FEATURES}>
+                    <Link href={CLIENT_ROUTES.FEATURES}>
+                        <p
+                            className={`${
+                                pathName === CLIENT_ROUTES.FEATURES
+                                    ? "text-primary"
+                                    : "text-foreground"
+                            }`}
+                        >
+                            Features
+                        </p>
                     </Link>
                 </NavbarItem>
-                <NavbarItem isActive>
-                    <Link aria-current="page" href="#">
-                        Customers
-                    </Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Link color="foreground" href="#">
-                        Integrations
+                <NavbarItem isActive={pathName === CLIENT_ROUTES.DOCS}>
+                    <Link href={CLIENT_ROUTES.DOCS}>
+                        <p
+                            className={`${
+                                pathName === CLIENT_ROUTES.DOCS
+                                    ? "text-primary"
+                                    : "text-foreground"
+                            }`}
+                        >
+                            Docs
+                        </p>
                     </Link>
                 </NavbarItem>
             </NavbarContent>
