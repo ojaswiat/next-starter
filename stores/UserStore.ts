@@ -2,9 +2,12 @@ import type { TUser } from "@/lib/types";
 
 import { create } from "zustand";
 
+import { createClient } from "@/utils/supabase/client";
+
 type TUserStore = {
-    user: TUser;
-    updateUser: (user: TUser) => void;
+    user: TUser | null;
+
+    fetchUserDetails: () => void;
 };
 
 const useUserStore = create<TUserStore>((set) => ({
@@ -12,9 +15,14 @@ const useUserStore = create<TUserStore>((set) => ({
         email: "",
     },
 
-    updateUser(userInfo: TUser) {
+    fetchUserDetails: async () => {
+        const supabase = createClient();
+        const {
+            data: { user: userInfo },
+        } = await supabase.auth.getUser();
+
         set(() => ({
-            user: userInfo,
+            user: userInfo as TUser,
         }));
     },
 }));

@@ -68,13 +68,12 @@ export const updateSession = async (request: NextRequest) => {
             !isEmpty(user) &&
             (request.nextUrl.pathname === CLIENT_ROUTES.LOGIN ||
                 request.nextUrl.pathname === CLIENT_ROUTES.SIGNUP ||
-                request.nextUrl.pathname === CLIENT_ROUTES.HOME ||
                 request.nextUrl.pathname === CLIENT_ROUTES.FORGOT_PASSWORD)
         ) {
-            // if the user is logged in and the url is login, signup, or landing page, we redirect the user to the dasbhoard.
+            // if the user is logged in and the url is login, signup, or forgot-password we redirect the user to home.
             const url = request.nextUrl.clone();
 
-            url.pathname = CLIENT_ROUTES.DASHBOARD;
+            url.pathname = CLIENT_ROUTES.HOME;
 
             return NextResponse.redirect(url);
         }

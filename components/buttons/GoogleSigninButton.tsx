@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -49,21 +48,18 @@ export default function GoogleSignin() {
             className="w-full"
             color="primary"
             disabled={isGoogleLoading}
+            isLoading={isGoogleLoading}
             type="button"
             variant="bordered"
             onPress={signInWithGoogle}
         >
-            {isGoogleLoading ? (
-                <Loader2 className="mr-2 size-4 animate-spin" />
-            ) : (
-                <Image
-                    alt="Google logo"
-                    className="mr-2"
-                    height={20}
-                    src="https://authjs.dev/img/providers/google.svg"
-                    width={20}
-                />
-            )}{" "}
+            <Image
+                alt="Google logo"
+                className="mr-2"
+                height={20}
+                src="https://authjs.dev/img/providers/google.svg"
+                width={20}
+            />
             Sign in with Google
         </Button>
     );

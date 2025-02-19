@@ -1,16 +1,16 @@
+import type { TUser } from "@/lib/types";
+
 import { Geist } from "next/font/google";
-import Link from "next/link";
 
 import Providers from "./providers";
 
-import DeployButton from "@/components/buttons/DeployButton";
-import HeaderAuth from "@/components/sections/HeaderAuth";
+import TopNavbar from "@/components/sections/TopNavbar";
 import AlertNotify from "@/components/ui/AlertNotify";
-import EnvVarWarning from "@/components/ui/EnvVarWarning";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
-import HAS_ENV_VARS from "@/utils/supabase/checkEnvVars";
 
 import "@/global/styles/global.scss";
+import { createClient } from "@/utils/supabase/server";
+
 import "./globals.css";
 
 // Vercel sets it's own environment variables when deployed
@@ -32,11 +32,16 @@ const geistSans = Geist({
     subsets: ["latin"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const supabase = await createClient();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
     return (
         <html
             suppressHydrationWarning
@@ -48,23 +53,7 @@ export default function RootLayout({
                     <main className="bg-background text-foreground flex flex-col items-center">
                         <AlertNotify />
                         <div className="flex-1 w-full flex flex-col items-center">
-                            <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-                                <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-                                    <div className="flex gap-5 items-center font-semibold">
-                                        <Link href={"/"}>
-                                            Next.js Supabase Starter
-                                        </Link>
-                                        <div className="flex items-center gap-2">
-                                            <DeployButton />
-                                        </div>
-                                    </div>
-                                    {!HAS_ENV_VARS ? (
-                                        <EnvVarWarning />
-                                    ) : (
-                                        <HeaderAuth />
-                                    )}
-                                </div>
-                            </nav>
+                            <TopNavbar user={user as TUser} />
                             <div className="w-full flex flex-col p-5">
                                 {children}
                             </div>

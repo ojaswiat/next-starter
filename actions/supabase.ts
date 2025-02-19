@@ -74,10 +74,7 @@ export const loginAction = async (formData: TLoginFormSchema) => {
             message: "Invalid credentials",
         };
     } else {
-        return {
-            code: EServerResponseCode.SUCCESS,
-            message: "Login successful",
-        };
+        redirect(CLIENT_ROUTES.DASHBOARD);
     }
 };
 
@@ -153,9 +150,21 @@ export const resetPasswordAction = async (
 };
 
 export const signOutAction = async () => {
-    const supabase = await createClient();
+    try {
+        const supabase = await createClient();
 
-    await supabase.auth.signOut();
+        await supabase.auth.signOut();
 
-    return redirect(CLIENT_ROUTES.LOGIN);
+        return {
+            code: EServerResponseCode.SUCCESS,
+            message: "User logged out successfully!",
+        };
+    } catch (error) {
+        console.error(error);
+
+        return {
+            code: EServerResponseCode.FAILURE,
+            message: "Failed to logout! Please try again",
+        };
+    }
 };

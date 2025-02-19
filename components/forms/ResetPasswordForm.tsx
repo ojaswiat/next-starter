@@ -55,7 +55,7 @@ export default function ResetPasswordForm() {
                     message: response.message,
                     type: EAlertType.SUCCESS,
                 });
-                router.push(CLIENT_ROUTES.DASHBOARD);
+                router.push(CLIENT_ROUTES.HOME);
             }
         } catch (error) {
             console.error("Password reset error:", error);

@@ -4,8 +4,8 @@ import type { TLoginFormSchema } from "@/lib/forms";
 
 import { Button, Input, Link } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+// import { useRouter } from "next/navigation";
 import { isEmpty } from "lodash-es";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -17,10 +17,12 @@ import { CLIENT_ROUTES, EServerResponseCode } from "@/lib/constants";
 import { LoginFormSchema } from "@/lib/forms";
 import { EAlertType } from "@/lib/types";
 import useAlertStore from "@/stores/AlertStore";
+// import useUserStore from "@/stores/UserStore";
 
 export default function LoginForm() {
     const alertStore = useAlertStore();
-    const router = useRouter();
+    // const userStore = useUserStore();
+    // const router = useRouter();
 
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +31,7 @@ export default function LoginForm() {
         register,
         handleSubmit,
         formState: { errors },
-        reset,
+        // reset,
     } = useForm<TLoginFormSchema>({
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
@@ -44,23 +46,16 @@ export default function LoginForm() {
             const response = await loginAction(data);
 
             if (
-                isEmpty(response) ||
-                response.code !== EServerResponseCode.SUCCESS
+                !isEmpty(response) &&
+                response.code === EServerResponseCode.FAILURE
             ) {
                 alertStore.notify({
                     message: response.message,
                     type: EAlertType.ERROR,
                 });
-            } else {
-                reset();
-                router.push(CLIENT_ROUTES.DASHBOARD);
             }
         } catch (error) {
             console.error("Login failed:", error);
-            alertStore.notify({
-                message: "Failed to login",
-                type: EAlertType.ERROR,
-            });
         } finally {
             setLoading(false);
         }
