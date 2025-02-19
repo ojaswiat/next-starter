@@ -11,6 +11,7 @@ import {
     NavbarItem,
 } from "@heroui/react";
 import { isEmpty } from "lodash-es";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -22,19 +23,6 @@ import useUserStore from "@/stores/UserStore";
 
 type TTopNavbarProps = {
     user: TUser;
-};
-
-export const AcmeLogo = () => {
-    return (
-        <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-            <path
-                clipRule="evenodd"
-                d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-                fill="currentColor"
-                fillRule="evenodd"
-            />
-        </svg>
-    );
 };
 
 export default function TopNavbar({ user }: TTopNavbarProps) {
@@ -73,9 +61,14 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
     }
 
     return (
-        <Navbar>
-            <NavbarBrand>
-                <AcmeLogo />
+        <Navbar isBordered>
+            <NavbarBrand className="flex gap-1">
+                <Image
+                    alt="Nexus Logo"
+                    height={20}
+                    src="/images/NexusLogo.svg"
+                    width={20}
+                />
                 <p className="font-bold text-inherit">Nexus</p>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -99,14 +92,21 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
             {isEmpty(user?.email) ? (
                 <NavbarContent justify="end">
                     <NavbarItem className="hidden lg:flex">
-                        <Link href={CLIENT_ROUTES.LOGIN}>Login</Link>
+                        <Button
+                            as={Link}
+                            color="primary"
+                            href={CLIENT_ROUTES.LOGIN}
+                            variant="bordered"
+                        >
+                            <p className="font-semibold">Login</p>
+                        </Button>
                     </NavbarItem>
                     <NavbarItem>
                         <Button
                             as={Link}
                             color="primary"
                             href={CLIENT_ROUTES.SIGNUP}
-                            variant="flat"
+                            variant="solid"
                         >
                             Sign Up
                         </Button>
