@@ -6,11 +6,10 @@ import Providers from "./providers";
 
 import TopNavbar from "@/components/sections/TopNavbar";
 import AlertNotify from "@/components/ui/AlertNotify";
+import NavigationProgress from "@/components/ui/NavigationProgress";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
-
 import "@/global/styles/global.scss";
 import { createClient } from "@/utils/supabase/server";
-
 import "./globals.css";
 
 // Vercel sets it's own environment variables when deployed
@@ -50,6 +49,7 @@ export default async function RootLayout({
         >
             <body className="h-screen w-screen">
                 <Providers>
+                    <NavigationProgress />
                     <main className="bg-background text-foreground flex flex-col items-center">
                         <AlertNotify />
                         <div className="flex-1 w-full flex flex-col items-center">
