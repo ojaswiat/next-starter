@@ -1,4 +1,5 @@
 import type { TUser } from "@/lib/types";
+import type { ReactNode } from "react";
 
 import { Geist } from "next/font/google";
 
@@ -34,7 +35,7 @@ const geistSans = Geist({
 export default async function RootLayout({
     children,
 }: Readonly<{
-    children: React.ReactNode;
+    children: ReactNode;
 }>) {
     const supabase = await createClient();
     const {
@@ -52,7 +53,7 @@ export default async function RootLayout({
                     <NavigationProgress />
                     <AlertNotify />
                     <TopNavbar user={user as TUser} />
-                    <main className="w-full h-[89%] overflow-y-scroll bg-background text-foreground">
+                    <main className="w-full h-[89%] overflow-y-scroll bg-background text-foreground flex flex-col pt-4">
                         {children}
                     </main>
                     <AppFooter />

@@ -14,6 +14,10 @@ const PROTECTED_ROUTES = [
 export const updateSession = async (request: NextRequest) => {
     // This `try/catch` block is only here for the interactive tutorial.
     // Feel free to remove once you have Supabase connected.
+    const headers = new Headers(request.headers);
+
+    headers.set("x-current-path", request.nextUrl.pathname);
+
     try {
         // Create an unmodified response
         let response = NextResponse.next({
@@ -60,7 +64,7 @@ export const updateSession = async (request: NextRequest) => {
 
             url.pathname = CLIENT_ROUTES.LOGIN;
 
-            return NextResponse.redirect(url);
+            return NextResponse.redirect(url, { headers });
         }
 
         if (
@@ -74,7 +78,7 @@ export const updateSession = async (request: NextRequest) => {
 
             url.pathname = CLIENT_ROUTES.DASHBOARD;
 
-            return NextResponse.redirect(url);
+            return NextResponse.redirect(url, { headers });
         }
 
         return response;
@@ -86,7 +90,7 @@ export const updateSession = async (request: NextRequest) => {
 
         return NextResponse.next({
             request: {
-                headers: request.headers,
+                headers,
             },
         });
     }

@@ -5,7 +5,7 @@ import { ArrowUpRight, InfoIcon } from "lucide-react";
 
 export default function SmtpMessage() {
     return (
-        <div className="bg-muted/50 px-5 py-3 border rounded-md flex gap-4 mx-auto w-fit">
+        <div className="bg-muted/50 px-5 py-3 border rounded-md flex gap-4 mt-8 mx-auto">
             <InfoIcon className="mt-0.5" size={16} />
             <div className="flex flex-col gap-1">
                 <small className="text-sm text-foreground">

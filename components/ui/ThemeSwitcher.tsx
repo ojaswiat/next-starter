@@ -30,8 +30,7 @@ export default function ThemeSwitcher() {
     return (
         <Dropdown className="bg-background border border-primary">
             <DropdownTrigger asChild>
-                <Button variant="bordered" color="primary">
-                    Color Mode
+                <Button variant="bordered" color="primary" isIconOnly>
                     {theme === "light" ? (
                         <Sun
                             key="light"
