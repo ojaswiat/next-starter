@@ -4,10 +4,10 @@ import { Geist } from "next/font/google";
 
 import Providers from "./providers";
 
+import AppFooter from "@/components/sections/AppFooter";
 import TopNavbar from "@/components/sections/TopNavbar";
 import AlertNotify from "@/components/ui/AlertNotify";
 import NavigationProgress from "@/components/ui/NavigationProgress";
-import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import "@/global/styles/global.scss";
 import { createClient } from "@/utils/supabase/server";
 import "./globals.css";
@@ -44,13 +44,13 @@ export default async function RootLayout({
     return (
         <html
             suppressHydrationWarning
-            className={geistSans.className}
+            className={`${geistSans.className} h-screen w-screen`}
             lang="en"
         >
-            <body className="h-screen w-screen">
+            <body className="w-full">
                 <Providers>
                     <NavigationProgress />
-                    <main className="bg-background text-foreground flex flex-col items-center">
+                    <main className="w-full bg-background text-foreground flex flex-col items-center">
                         <AlertNotify />
                         <div className="flex-1 w-full flex flex-col items-center">
                             <TopNavbar user={user as TUser} />
@@ -58,20 +58,7 @@ export default async function RootLayout({
                                 {children}
                             </div>
 
-                            <footer className="border-t mx-auto text-center pt-8 flex flex-col gap-2 absolute bottom-8">
-                                <p className="text-md">
-                                    Powered by{" "}
-                                    <a
-                                        className="font-bold hover:underline"
-                                        href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                    >
-                                        Supabase
-                                    </a>
-                                </p>
-                                <ThemeSwitcher />
-                            </footer>
+                            <AppFooter />
                         </div>
                     </main>
                 </Providers>

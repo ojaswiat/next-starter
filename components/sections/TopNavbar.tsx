@@ -67,12 +67,12 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
             <NavbarBrand className="flex gap-1">
                 <Image
                     alt="Nexus Logo"
-                    height={20}
+                    height={16}
                     src="/images/NexusLogo.svg"
-                    width={20}
+                    width={16}
                 />
                 <Link
-                    className="font-bold text-primary"
+                    className="font-bold text-primary text-xl"
                     href={CLIENT_ROUTES.HOME}
                 >
                     Nexus

@@ -13,7 +13,8 @@ export default async function WithAuthLayout({
 }) {
     /*
      * This layout ensures that the user is logged in.
-     * This is also ensured in the supabase/middleware.ts file.
+     * This is also ensured in the supabase/middleware.ts
+     * Be careful while placing your routes in app folder.
      */
 
     const supabase = await createClient();
