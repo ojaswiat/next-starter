@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 export default function Providers({ children }: { children: ReactNode }) {
     return (
         <QueryClientProvider client={queryClient}>
-            <HeroUIProvider>
+            <HeroUIProvider className="h-full">
                 <ThemeProvider
                     disableTransitionOnChange
                     enableSystem

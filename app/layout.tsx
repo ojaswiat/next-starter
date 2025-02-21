@@ -47,20 +47,15 @@ export default async function RootLayout({
             className={`${geistSans.className} h-screen w-screen`}
             lang="en"
         >
-            <body className="w-full">
+            <body className="w-full h-full flex flex-col">
                 <Providers>
                     <NavigationProgress />
-                    <main className="w-full bg-background text-foreground flex flex-col items-center">
-                        <AlertNotify />
-                        <div className="flex-1 w-full flex flex-col items-center">
-                            <TopNavbar user={user as TUser} />
-                            <div className="w-full flex flex-col p-5">
-                                {children}
-                            </div>
-
-                            <AppFooter />
-                        </div>
+                    <AlertNotify />
+                    <TopNavbar user={user as TUser} />
+                    <main className="w-full h-[89%] overflow-y-scroll bg-background text-foreground">
+                        {children}
                     </main>
+                    <AppFooter />
                 </Providers>
             </body>
         </html>

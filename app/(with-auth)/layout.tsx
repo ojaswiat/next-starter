@@ -24,5 +24,5 @@ export default async function WithAuthLayout({
         redirect(CLIENT_ROUTES.LOGIN);
     }
 
-    return <div className="flex flex-col items-start w-full">{children}</div>;
+    return <>{children}</>;
 }
