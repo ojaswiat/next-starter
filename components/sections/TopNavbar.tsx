@@ -16,6 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { signOutAction } from "@/actions/supabase";
+import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import { CLIENT_ROUTES, EServerResponseCode } from "@/lib/constants";
 import { EAlertType } from "@/lib/types";
 import useAlertStore from "@/stores/AlertStore";
@@ -121,47 +122,54 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
                     </Link>
                 </NavbarItem>
             </NavbarContent>
-
-            {isEmpty(user?.email) ? (
-                <NavbarContent justify="end">
-                    <NavbarItem className="hidden lg:flex">
-                        <Button
-                            as={Link}
-                            color="primary"
-                            href={CLIENT_ROUTES.LOGIN}
-                            variant="bordered"
-                        >
-                            <p className="font-semibold">Login</p>
-                        </Button>
-                    </NavbarItem>
-                    <NavbarItem>
-                        <Button
-                            as={Link}
-                            color="primary"
-                            href={CLIENT_ROUTES.SIGNUP}
-                            variant="solid"
-                        >
-                            Sign Up
-                        </Button>
-                    </NavbarItem>
-                </NavbarContent>
-            ) : (
-                <NavbarContent justify="end">
-                    <NavbarItem>
-                        <p className="text-md text-primary">{user?.email}</p>
-                    </NavbarItem>
-                    <NavbarItem>
-                        <Button
-                            className="w-12"
-                            isLoading={loading}
-                            variant="bordered"
-                            onPress={onLogout}
-                        >
-                            Logout
-                        </Button>
-                    </NavbarItem>
-                </NavbarContent>
-            )}
+            <div className="ml-auto" />
+            <NavbarContent justify="end">
+                {isEmpty(user?.email) ? (
+                    <>
+                        <NavbarItem>
+                            <Button
+                                as={Link}
+                                color="primary"
+                                href={CLIENT_ROUTES.LOGIN}
+                                variant="bordered"
+                            >
+                                <p className="font-semibold">Login</p>
+                            </Button>
+                        </NavbarItem>
+                        <NavbarItem>
+                            <Button
+                                as={Link}
+                                color="primary"
+                                href={CLIENT_ROUTES.SIGNUP}
+                                variant="solid"
+                            >
+                                Sign Up
+                            </Button>
+                        </NavbarItem>
+                    </>
+                ) : (
+                    <>
+                        <NavbarItem>
+                            <p className="text-md text-primary">
+                                {user?.email}
+                            </p>
+                        </NavbarItem>
+                        <NavbarItem>
+                            <Button
+                                className="w-12"
+                                isLoading={loading}
+                                variant="bordered"
+                                onPress={onLogout}
+                            >
+                                Logout
+                            </Button>
+                        </NavbarItem>
+                    </>
+                )}
+                <NavbarItem>
+                    <ThemeSwitcher />
+                </NavbarItem>
+            </NavbarContent>
         </Navbar>
     );
 }

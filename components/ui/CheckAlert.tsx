@@ -15,12 +15,7 @@ export default function CheckAlert() {
     }
 
     return (
-        <Button
-            variant="solid"
-            color="primary"
-            onPress={showAlert}
-            className="text-white"
-        >
+        <Button variant="solid" color="primary" onPress={showAlert}>
             Check Alert
         </Button>
     );
