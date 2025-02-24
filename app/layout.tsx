@@ -53,7 +53,7 @@ export default async function RootLayout({
                     <NavigationProgress />
                     <AlertNotify />
                     <TopNavbar user={user as TUser} />
-                    <main className="w-full h-[89%] overflow-y-scroll bg-background text-foreground flex flex-col pt-4">
+                    <main className="w-full h-[85%] overflow-y-scroll bg-background text-foreground flex flex-col pt-4">
                         {children}
                     </main>
                     <AppFooter />

@@ -24,5 +24,5 @@ export default async function WithAuthLayout({
         redirect(CLIENT_ROUTES.LOGIN);
     }
 
-    return <>{children}</>;
+    return <div className="p-4">{children}</div>;
 }

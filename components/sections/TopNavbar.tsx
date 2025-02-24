@@ -3,17 +3,23 @@
 import type { TUser } from "@/lib/types";
 
 import {
+    Avatar,
     Button,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
     Navbar,
     NavbarBrand,
     NavbarContent,
     NavbarItem,
 } from "@heroui/react";
 import { isEmpty } from "lodash-es";
+import { CircleUser } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { signOutAction } from "@/actions/supabase";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
@@ -33,15 +39,12 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
     const alertStore = useAlertStore();
     const userStore = useUserStore();
 
-    const [loading, setLoading] = useState(false);
-
     useEffect(() => {
         userStore.fetchUserDetails();
     }, [user]);
 
     async function onLogout() {
         try {
-            setLoading(true);
             const response = await signOutAction();
 
             if (response.code === EServerResponseCode.SUCCESS) {
@@ -58,8 +61,6 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
                 type: EAlertType.ERROR,
                 message: "Failed to logout! Please try again",
             });
-        } finally {
-            setLoading(false);
         }
     }
 
@@ -149,21 +150,38 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
                     </>
                 ) : (
                     <>
-                        <NavbarItem>
-                            <p className="text-md text-primary">
-                                {user?.email}
-                            </p>
-                        </NavbarItem>
-                        <NavbarItem>
-                            <Button
-                                className="w-12"
-                                isLoading={loading}
-                                variant="bordered"
-                                onPress={onLogout}
-                            >
-                                Logout
-                            </Button>
-                        </NavbarItem>
+                        <Dropdown className="bg-background border border-primary">
+                            <DropdownTrigger>
+                                <Avatar>
+                                    <CircleUser />
+                                </Avatar>
+                            </DropdownTrigger>
+                            <DropdownMenu>
+                                <DropdownItem
+                                    key="profile"
+                                    onPress={() =>
+                                        router.push(CLIENT_ROUTES.PROFILE)
+                                    }
+                                >
+                                    Profile
+                                </DropdownItem>
+                                <DropdownItem
+                                    key="settings"
+                                    onPress={() =>
+                                        router.push(CLIENT_ROUTES.SETTINGS)
+                                    }
+                                >
+                                    Settings
+                                </DropdownItem>
+                                <DropdownItem
+                                    key="logout"
+                                    className="border-t border-primary mt-4"
+                                    onPress={() => onLogout()}
+                                >
+                                    Logout
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
                     </>
                 )}
                 <NavbarItem>
