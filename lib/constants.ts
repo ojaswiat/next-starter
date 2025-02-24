@@ -29,3 +29,21 @@ export enum EServerResponseCode {
     SUCCESS,
     FAILURE,
 }
+
+export const NAV_ITEMS = [
+    {
+        key: "dashboard",
+        title: "Dashboard",
+        href: CLIENT_ROUTES.DASHBOARD,
+    },
+    {
+        key: "features",
+        title: "Features",
+        href: CLIENT_ROUTES.FEATURES,
+    },
+    {
+        key: "docs",
+        title: "Docs",
+        href: CLIENT_ROUTES.DOCS,
+    },
+];

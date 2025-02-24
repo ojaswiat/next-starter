@@ -5,6 +5,9 @@ import type { TUser } from "@/lib/types";
 import {
     Avatar,
     Button,
+    Drawer,
+    DrawerBody,
+    DrawerContent,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -13,9 +16,10 @@ import {
     NavbarBrand,
     NavbarContent,
     NavbarItem,
+    useDisclosure,
 } from "@heroui/react";
 import { isEmpty } from "lodash-es";
-import { CircleUser } from "lucide-react";
+import { CircleUser, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -23,7 +27,7 @@ import { useEffect } from "react";
 
 import { signOutAction } from "@/actions/supabase";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
-import { CLIENT_ROUTES, EServerResponseCode } from "@/lib/constants";
+import { CLIENT_ROUTES, EServerResponseCode, NAV_ITEMS } from "@/lib/constants";
 import { EAlertType } from "@/lib/types";
 import useAlertStore from "@/stores/AlertStore";
 import useUserStore from "@/stores/UserStore";
@@ -38,6 +42,7 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
 
     const alertStore = useAlertStore();
     const userStore = useUserStore();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     useEffect(() => {
         userStore.fetchUserDetails();
@@ -66,6 +71,56 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
 
     return (
         <Navbar isBordered>
+            {/* Side Navigation Drawer for Mobile */}
+            <Button
+                disableRipple
+                className="sm:hidden px-0 justify-start"
+                color="primary"
+                size="sm"
+                variant="light"
+                onPress={onOpen}
+            >
+                <Menu className="text-foreground" />
+            </Button>
+
+            <Drawer
+                className="w-48"
+                isOpen={isOpen}
+                placement="left"
+                onOpenChange={onOpenChange}
+            >
+                <DrawerContent>
+                    {(onClose) => (
+                        <>
+                            <DrawerBody className="mt-8">
+                                {NAV_ITEMS.map((item) => {
+                                    return (item.key === "dashboard" &&
+                                        user?.email) ||
+                                        item.key !== "dashboard" ? (
+                                        <Link
+                                            key={item.key}
+                                            href={item.href}
+                                            onClick={onClose}
+                                        >
+                                            <p
+                                                className={`${
+                                                    pathName === item.href
+                                                        ? "text-primary"
+                                                        : "text-foreground"
+                                                }`}
+                                            >
+                                                {item.title}
+                                            </p>
+                                        </Link>
+                                    ) : null;
+                                })}
+                            </DrawerBody>
+                        </>
+                    )}
+                </DrawerContent>
+            </Drawer>
+
+            {/* Top Navigation */}
             <NavbarBrand className="flex gap-1">
                 <Image
                     alt="Nexus Logo"
@@ -81,47 +136,27 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
                 </Link>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
-                {!isEmpty(user?.email) ? (
-                    <NavbarItem isActive={pathName === CLIENT_ROUTES.DASHBOARD}>
-                        <Link href={CLIENT_ROUTES.DASHBOARD}>
-                            <p
-                                className={`${
-                                    pathName === CLIENT_ROUTES.DASHBOARD
-                                        ? "text-primary"
-                                        : "text-foreground"
-                                }`}
-                            >
-                                Dashboard
-                            </p>
-                        </Link>
-                    </NavbarItem>
-                ) : null}
-                <NavbarItem isActive={pathName === CLIENT_ROUTES.FEATURES}>
-                    <Link href={CLIENT_ROUTES.FEATURES}>
-                        <p
-                            className={`${
-                                pathName === CLIENT_ROUTES.FEATURES
-                                    ? "text-primary"
-                                    : "text-foreground"
-                            }`}
+                {NAV_ITEMS.map((item) => {
+                    return (item.key === "dashboard" && user?.email) ||
+                        item.key !== "dashboard" ? (
+                        <NavbarItem
+                            key={item.key}
+                            isActive={pathName === item.href}
                         >
-                            Features
-                        </p>
-                    </Link>
-                </NavbarItem>
-                <NavbarItem isActive={pathName === CLIENT_ROUTES.DOCS}>
-                    <Link href={CLIENT_ROUTES.DOCS}>
-                        <p
-                            className={`${
-                                pathName === CLIENT_ROUTES.DOCS
-                                    ? "text-primary"
-                                    : "text-foreground"
-                            }`}
-                        >
-                            Docs
-                        </p>
-                    </Link>
-                </NavbarItem>
+                            <Link href={item.href}>
+                                <p
+                                    className={`${
+                                        pathName === item.href
+                                            ? "text-primary"
+                                            : "text-foreground"
+                                    }`}
+                                >
+                                    {item.title}
+                                </p>
+                            </Link>
+                        </NavbarItem>
+                    ) : null;
+                })}
             </NavbarContent>
             <div className="ml-auto" />
             <NavbarContent justify="end">
@@ -137,7 +172,7 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
                                 <p className="font-semibold">Login</p>
                             </Button>
                         </NavbarItem>
-                        <NavbarItem>
+                        <NavbarItem className="hidden sm:block">
                             <Button
                                 as={Link}
                                 color="primary"
