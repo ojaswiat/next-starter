@@ -90,6 +90,7 @@ export default function SignupForm() {
                 <Input
                     {...register("email")}
                     fullWidth
+                    required
                     errorMessage={errors.email?.message}
                     isInvalid={!!errors?.email}
                     label="Email"
@@ -99,6 +100,7 @@ export default function SignupForm() {
                 <Input
                     {...register("password")}
                     fullWidth
+                    required
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}
@@ -114,6 +116,7 @@ export default function SignupForm() {
                 <Input
                     {...register("confirmPassword")}
                     fullWidth
+                    required
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}

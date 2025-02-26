@@ -82,6 +82,7 @@ export default function ForgotPasswordFrom() {
                 <Input
                     {...register("email")}
                     fullWidth
+                    required
                     errorMessage={errors.email?.message}
                     isInvalid={!!errors?.email}
                     label="Email"

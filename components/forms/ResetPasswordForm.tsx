@@ -86,6 +86,7 @@ export default function ResetPasswordForm() {
                 <Input
                     {...register("password")}
                     fullWidth
+                    required
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}
@@ -101,6 +102,7 @@ export default function ResetPasswordForm() {
                 <Input
                     {...register("confirmPassword")}
                     fullWidth
+                    required
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}
