@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash-es";
 import { NextResponse } from "next/server";
 
 import { CLIENT_ROUTES } from "@/lib/constants";
@@ -17,7 +18,7 @@ export async function GET(request: Request) {
 
         const { error } = await supabase.auth.exchangeCodeForSession(code);
 
-        if (error) {
+        if (!isEmpty(error)) {
             return NextResponse.redirect(
                 `${origin}${CLIENT_ROUTES.LOGIN}?failed=true`,
             );

@@ -12,15 +12,20 @@ import { createClient } from "@/utils/supabase/client";
 export default function GoogleSignin() {
     const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
 
+    const searchParams = useSearchParams();
     const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
     const supabase = createClient();
 
     const alertStore = useAlertStore();
 
+    // Check if the fragment contains the error_code parameter
+    const hash = window?.location?.hash; // e.g., "#error_code=2"
+    const params = new URLSearchParams(hash?.replace("#", "")); // Remove '#' and parse the query part
+    const errorDescription = params?.get?.("error_description"); // Get the 'error_code' value
+
     const next = searchParams.get("next");
-    const loginFailed = searchParams.get("failed");
+    const loginFailed = searchParams.get("failed") || !!errorDescription;
 
     useEffect(() => {
         // Shows an alert when google sign in fails and remove the search params
