@@ -16,7 +16,7 @@ CREATE TABLE "todos" (
     "title" TEXT NOT NULL,
     "description" TEXT,
     "completed" BOOLEAN NOT NULL DEFAULT false,
-    "userId" UUID NOT NULL,
+    "user_id" UUID NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -27,4 +27,4 @@ CREATE TABLE "todos" (
 CREATE UNIQUE INDEX "profiles_email_key" ON "profiles"("email");
 
 -- AddForeignKey
-ALTER TABLE "todos" ADD CONSTRAINT "todos_userId_fkey" FOREIGN KEY ("userId") REFERENCES "profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "todos" ADD CONSTRAINT "todos_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
