@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// Auth
 const emailSchema = z.string().email("Please enter a valid email");
 const passwordSchema = z
     .string()
@@ -17,14 +18,10 @@ export const SignupFormSchema = z
         path: ["confirmPassword"],
     });
 
-export type TSignupFormSchema = z.infer<typeof SignupFormSchema>;
-
 export const LoginFormSchema = z.object({
     email: emailSchema,
     password: z.string(),
 });
-
-export type TLoginFormSchema = z.infer<typeof LoginFormSchema>;
 
 export const ForgotPasswordFormSchema = z.object({
     email: emailSchema,
@@ -44,4 +41,44 @@ export const ResetPasswordFormSchema = z
         path: ["confirmPassword"],
     });
 
+export type TSignupFormSchema = z.infer<typeof SignupFormSchema>;
+export type TLoginFormSchema = z.infer<typeof LoginFormSchema>;
 export type TResetPasswordFormSchema = z.infer<typeof ResetPasswordFormSchema>;
+
+// Todos
+export const TodoCreateFormSchema = z.object({
+    title: z
+        .string()
+        .min(1, "Title is required")
+        .max(100, "Title must be less than 100 characters"),
+    description: z
+        .string()
+        .max(300, "Description must be less than 300 characters")
+        .nullish(),
+});
+
+export const TodoUpdateFormSchema = z.object({
+    id: z.string().uuid("Invalid todo ID format"),
+    title: z
+        .string()
+        .min(1, "Title is required")
+        .max(100, "Title must be less than 100 characters"),
+    description: z
+        .string()
+        .max(300, "Description must be less than 300 characters")
+        .nullish(),
+    completed: z.boolean().optional(),
+});
+
+export const TodoDeleteFormSchema = z.object({
+    id: z.string().uuid("Invalid todo ID format"),
+});
+
+export const TodoToggleFormSchema = z.object({
+    id: z.string().uuid("Invalid todo ID format"),
+    completed: z.boolean(),
+});
+export type TTodoCreateFormSchema = z.infer<typeof TodoCreateFormSchema>;
+export type TTodoUpdateFormSchema = z.infer<typeof TodoUpdateFormSchema>;
+export type TTodoDeleteFormSchema = z.infer<typeof TodoDeleteFormSchema>;
+export type TTodoToggleFormSchema = z.infer<typeof TodoToggleFormSchema>;

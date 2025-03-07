@@ -29,6 +29,7 @@ export default function ResetPasswordForm() {
         formState: { errors },
         reset,
     } = useForm<TResetPasswordFormSchema>({
+        mode: "onChange",
         resolver: zodResolver(ResetPasswordFormSchema),
         defaultValues: {
             password: "",
@@ -73,7 +74,7 @@ export default function ResetPasswordForm() {
     }
 
     return (
-        <div className="container self-center flex flex-col gap-4 max-w-xl">
+        <div className="container self-center flex flex-col gap-4 max-w-xl mx-auto">
             <div>
                 <h1 className="text-2xl font-medium">Reset Password</h1>
                 <p className="text-sm text-foreground">Reset your password</p>
@@ -86,7 +87,7 @@ export default function ResetPasswordForm() {
                 <Input
                     {...register("password")}
                     fullWidth
-                    required
+                    isRequired
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}
@@ -102,7 +103,7 @@ export default function ResetPasswordForm() {
                 <Input
                     {...register("confirmPassword")}
                     fullWidth
-                    required
+                    isRequired
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}

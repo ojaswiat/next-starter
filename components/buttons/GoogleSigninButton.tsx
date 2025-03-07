@@ -20,7 +20,7 @@ export default function GoogleSignin() {
     const alertStore = useAlertStore();
 
     // Check if the fragment contains the error_code parameter
-    const hash = window?.location?.hash; // e.g., "#error_code=2"
+    const hash = typeof window !== "undefined" ? window?.location?.hash : null; // e.g., "#error_code=2"
     const params = new URLSearchParams(hash?.replace("#", "")); // Remove '#' and parse the query part
     const errorDescription = params?.get?.("error_description"); // Get the 'error_code' value
 
@@ -64,6 +64,7 @@ export default function GoogleSignin() {
             }
         } catch (error) {
             alertStore.notify({
+                type: EAlertType.ERROR,
                 title: "Please try again.",
                 message: "There was an error logging in with Google.",
             });

@@ -24,6 +24,7 @@ export default function ForgotPasswordFrom() {
         formState: { errors },
         reset,
     } = useForm<TForgotPasswordFormSchema>({
+        mode: "onChange",
         resolver: zodResolver(ForgotPasswordFormSchema),
         defaultValues: {
             email: "",
@@ -82,7 +83,7 @@ export default function ForgotPasswordFrom() {
                 <Input
                     {...register("email")}
                     fullWidth
-                    required
+                    isRequired
                     errorMessage={errors.email?.message}
                     isInvalid={!!errors?.email}
                     label="Email"

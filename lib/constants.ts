@@ -5,6 +5,7 @@ export const CLIENT_ROUTES = {
     DASHBOARD: "/dashboard",
     RESET_PASSWORD: "/reset-password",
     DOCS: "/docs",
+    TODOS: "/todos",
     FEATURES: "/features",
     SETTINGS: "/settings",
     PROFILE: "/profile",
@@ -46,4 +47,17 @@ export const NAV_ITEMS = [
         title: "Docs",
         href: CLIENT_ROUTES.DOCS,
     },
+    {
+        key: "todos",
+        title: "Todos",
+        href: CLIENT_ROUTES.TODOS,
+    },
+];
+
+export const PROTECTED_ROUTES = [
+    CLIENT_ROUTES.DASHBOARD,
+    CLIENT_ROUTES.TODOS,
+    CLIENT_ROUTES.PROFILE,
+    CLIENT_ROUTES.SETTINGS,
+    CLIENT_ROUTES.RESET_PASSWORD,
 ];

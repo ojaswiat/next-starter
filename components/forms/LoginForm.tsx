@@ -33,6 +33,7 @@ export default function LoginForm() {
         formState: { errors },
         // reset,
     } = useForm<TLoginFormSchema>({
+        mode: "onChange",
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
             email: "",
@@ -86,7 +87,7 @@ export default function LoginForm() {
                 <Input
                     {...register("email")}
                     fullWidth
-                    required
+                    isRequired
                     errorMessage={errors.email?.message}
                     isInvalid={!!errors?.email}
                     label="Email"
@@ -95,7 +96,7 @@ export default function LoginForm() {
                 <Input
                     {...register("password")}
                     fullWidth
-                    required
+                    isRequired
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}

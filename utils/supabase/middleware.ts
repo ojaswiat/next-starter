@@ -2,14 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { includes, isEmpty } from "lodash-es";
 import { type NextRequest, NextResponse } from "next/server";
 
-import { CLIENT_ROUTES } from "@/lib/constants";
-
-const PROTECTED_ROUTES = [
-    CLIENT_ROUTES.DASHBOARD,
-    CLIENT_ROUTES.PROFILE,
-    CLIENT_ROUTES.SETTINGS,
-    CLIENT_ROUTES.RESET_PASSWORD,
-];
+import { CLIENT_ROUTES, PROTECTED_ROUTES } from "@/lib/constants";
 
 export const updateSession = async (request: NextRequest) => {
     // This `try/catch` block is only here for the interactive tutorial.

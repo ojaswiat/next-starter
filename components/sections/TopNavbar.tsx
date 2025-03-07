@@ -18,7 +18,7 @@ import {
     NavbarItem,
     useDisclosure,
 } from "@heroui/react";
-import { isEmpty } from "lodash-es";
+import { includes, isEmpty } from "lodash-es";
 import { CircleUser, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,7 +27,12 @@ import { useEffect } from "react";
 
 import { signOutAction } from "@/actions/supabase";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
-import { CLIENT_ROUTES, EServerResponseCode, NAV_ITEMS } from "@/lib/constants";
+import {
+    CLIENT_ROUTES,
+    EServerResponseCode,
+    NAV_ITEMS,
+    PROTECTED_ROUTES,
+} from "@/lib/constants";
 import { EAlertType } from "@/lib/types";
 import useAlertStore from "@/stores/AlertStore";
 import useUserStore from "@/stores/UserStore";
@@ -137,8 +142,9 @@ export default function TopNavbar({ user }: TTopNavbarProps) {
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 {NAV_ITEMS.map((item) => {
-                    return (item.key === "dashboard" && user?.email) ||
-                        item.key !== "dashboard" ? (
+                    return (includes(PROTECTED_ROUTES, item.href) &&
+                        user?.email) ||
+                        !includes(PROTECTED_ROUTES, item.href) ? (
                         <NavbarItem
                             key={item.key}
                             isActive={pathName === item.href}

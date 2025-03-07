@@ -20,3 +20,13 @@ export type TAlert = {
 export type TUser = {
     email: string;
 };
+
+export type TTodo = {
+    id: string;
+    title: string;
+    description: string | null;
+    completed: boolean;
+    userId: string;
+    createdAt: Date;
+    updatedAt: Date;
+};

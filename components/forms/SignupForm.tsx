@@ -26,6 +26,7 @@ export default function SignupForm() {
         formState: { errors },
         reset,
     } = useForm<TSignupFormSchema>({
+        mode: "onChange",
         resolver: zodResolver(SignupFormSchema),
         defaultValues: {
             email: "",
@@ -85,12 +86,12 @@ export default function SignupForm() {
             </div>
             <form
                 className="flex flex-col gap-y-4 mt-4 w-full"
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={() => handleSubmit(onSubmit)}
             >
                 <Input
                     {...register("email")}
                     fullWidth
-                    required
+                    isRequired
                     errorMessage={errors.email?.message}
                     isInvalid={!!errors?.email}
                     label="Email"
@@ -100,7 +101,7 @@ export default function SignupForm() {
                 <Input
                     {...register("password")}
                     fullWidth
-                    required
+                    isRequired
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}
@@ -116,7 +117,7 @@ export default function SignupForm() {
                 <Input
                     {...register("confirmPassword")}
                     fullWidth
-                    required
+                    isRequired
                     endContent={
                         <PasswordEye
                             showPassword={showPassword}
